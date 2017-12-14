@@ -1,0 +1,229 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Using Alpha Trading Labs &#8212; Alpha Trading Labs DSL documentation  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting Started" href="tutorial.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="using-alpha-trading-labs">
+<span id="home"></span><h1><strong>Using Alpha Trading Labs</strong><a class="headerlink" href="#using-alpha-trading-labs" title="Permalink to this headline">¶</a></h1>
+<p>Welcome to Alpha Trading Labs. Use this documentation as your starting point for creating a successful trading model.</p>
+<p>If you are new to Alpha Trading Labs and do not know where to start try going through <a class="reference internal" href="tutorial.html#gs"><span class="std std-ref">Getting Started</span></a>, which will help
+you understand how the application works and how to set up a new model.</p>
+<p>Once you feel comfortable with the application, how it works, and what it does, you can start
+creating your own valuation functions to be passed into the trading model. The application uses a DSL made
+specifically for writing valuation functions which you can use, look at the DSL documentation to see what you
+can use, and what it does.</p>
+<p>To help you with your valuation function you also have available marketlib, a library of functions which
+include both a series of ready made valuation functions you can use to start off with, and some helper
+functions to help you write your own.</p>
+<div class="section" id="getting-started">
+<h2><strong>Getting Started</strong><a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>Go through these steps to start getting acquainted with Alpha Trading Labs, and the DSL</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html"><strong>Getting Started</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#tutorial"><strong>Tutorial</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorial.html#getting-aquainted"><strong>Getting Aquainted</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial.html#understanding-the-model"><strong>Understanding the Model</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial.html#create-multiple-models-at-once"><strong>Create Multiple Models at Once</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial.html#use-your-own-valuation-function"><strong>Use your own Valuation Function</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorial.html#save-and-find-your-models"><strong>Save and Find Your Models</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#what-the-results-summary-means"><strong>What the Results Summary Means</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#model-parameters"><strong>Model Parameters</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#trading-column-parameters"><strong>Trading Column Parameters</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#valuation-functions"><strong>Valuation Functions</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorial.html#example-valuation-function-mp2"><strong>Example Valuation Function MP2</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#why-use-hold"><strong>Why Use Hold</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#go-to">Go To</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="alpha-trading-labs-dsl">
+<h2><strong>Alpha Trading Labs DSL</strong><a class="headerlink" href="#alpha-trading-labs-dsl" title="Permalink to this headline">¶</a></h2>
+<p>Go through this to know what you can achieve with your valuation function using the DSL</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="atomlib.html"><strong>Alpha Trading Labs DSL</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="atomlib.html#events"><strong>Events</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="atomlib.html#event-functions"><strong>Event Functions</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="atomlib.html#event-combining-functions"><strong>Event Combining Functions</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="atomlib.html#event-filtering-functions"><strong>Event Filtering Functions</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="atomlib.html#with-initial"><strong>With Initial</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="atomlib.html#logical-operators"><strong>Logical Operators</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="atomlib.html#all-functions"><strong>All Functions</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="atomlib.html#and-not-or-xor"><strong>And, Not, Or, Xor</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="atomlib.html#any"><strong>Any</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="atomlib.html#clock"><strong>Clock</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="atomlib.html#filter"><strong>Filter</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="atomlib.html#hold"><strong>Hold</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="atomlib.html#join"><strong>Join</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="atomlib.html#lag"><strong>Lag</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="atomlib.html#last"><strong>Last</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="atomlib.html#onchange"><strong>OnChange</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="atomlib.html#quote"><strong>Quote</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="atomlib.html#select"><strong>Select</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="atomlib.html#snapshot"><strong>Snapshot</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="atomlib.html#timestamp"><strong>Timestamp</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="atomlib.html#trade"><strong>Trade</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="atomlib.html#withinitial"><strong>WithInitial</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="atomlib.html#go-to">Go To</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="marketlib">
+<h2><strong>Marketlib</strong><a class="headerlink" href="#marketlib" title="Permalink to this headline">¶</a></h2>
+<p>Marketlib is imported by default, and will be a good resource to get you started</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="marketlib.html"><strong>Marketlib</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="marketlib.html#helper-functions"><strong>Helper Functions</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="marketlib.html#valuation-functions"><strong>Valuation Functions</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="marketlib.html#all-functions"><strong>All Functions</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="marketlib.html#askprice"><strong>askPrice</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="marketlib.html#askqty"><strong>askQty</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="marketlib.html#bidprice"><strong>bidPrice</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="marketlib.html#bidqty"><strong>bidQty</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="marketlib.html#ct"><strong>CT</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="marketlib.html#ema"><strong>EMA</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="marketlib.html#expweightav"><strong>ExpWeightAv</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="marketlib.html#insideask"><strong>InsideAsk</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="marketlib.html#insidebid"><strong>InsideBid</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="marketlib.html#mp2"><strong>MP2</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="marketlib.html#midpt"><strong>Midpt</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="marketlib.html#pricemultpremium"><strong>PriceMultPremium</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="marketlib.html#sizewa"><strong>SizeWa</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="marketlib.html#spread"><strong>Spread</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="marketlib.html#go-to">Go To</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="search">
+<h2>Search<a class="headerlink" href="#search" title="Permalink to this headline">¶</a></h2>
+<p>look up a key word to find details about a function or class in the atomlib DSL library</p>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="#">
+    <img class="logo" src="_static/logo.jpeg" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+
+<h3><a href="#">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html"><strong>Getting Started</strong></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="atomlib.html"><strong>Alpha Trading Labs DSL</strong></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="marketlib.html"><strong>Marketlib</strong></a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="tutorial.html" title="next chapter"><strong>Getting Started</strong></a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Alpha Trading Labs.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,1043 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Alpha Trading Labs DSL &#8212; Alpha Trading Labs DSL documentation  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Marketlib" href="marketlib.html" />
+    <link rel="prev" title="Getting Started" href="tutorial.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="alpha-trading-labs-dsl">
+<span id="al"></span><h1><strong>Alpha Trading Labs DSL</strong><a class="headerlink" href="#alpha-trading-labs-dsl" title="Permalink to this headline">¶</a></h1>
+<p>If you have not already you should first take a look at <a class="reference internal" href="tutorial.html#gs"><span class="std std-ref">Getting Started</span></a></p>
+<p>The Alpha Trading Labs Domain Specific Language is built to help you create a valuation function easily and effectively.
+The language is based on nodes where each event or variable is a unique instance of a node with special
+properties (You do not have to worry about their structure or what is going on behind the scenes).
+Each of these ‘nodes’ is built with valuation functions in mind.</p>
+<p>Use this page as a reference about what features of the DSL you have available and what they do.</p>
+<p><strong>NOTE:</strong></p>
+<ul class="simple">
+<li>You will write your valuation functions in all sense and purposes as python code. In reality however you are using
+our DSL, which when creating the model will interpret and restructure your code centered around <a class="reference internal" href="#events"><span class="std std-ref">Events</span></a> .
+To understand more about what that implies, go through the <a class="reference internal" href="tutorial.html#gs"><span class="std std-ref">Getting Started</span></a> page, specifically the <a class="reference internal" href="tutorial.html#valuationfunc"><span class="std std-ref">Valuation Functions</span></a></li>
+<li>Since the DSL is built on the idea of nodes this documentation may refer to values as nodes such as a number as a
+constant node, or a Boolean as a conditional node.</li>
+<li>You will note that the functions are shown as ‘atomlib.function’, the application implements the DSL such that
+you will not need to call any of the functions as ‘.function’ but simply call them as they are, examples found
+in the sample code for some of the functions.</li>
+</ul>
+<div class="section" id="events">
+<span id="id1"></span><h2><strong>Events</strong><a class="headerlink" href="#events" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="#clock"><span class="std std-ref">Clock</span></a></li>
+<li><a class="reference internal" href="#quote"><span class="std std-ref">Quote</span></a></li>
+<li><a class="reference internal" href="#trade"><span class="std std-ref">Trade</span></a></li>
+</ul>
+</div>
+<div class="section" id="event-functions">
+<span id="eventfuncs"></span><h2><strong>Event Functions</strong><a class="headerlink" href="#event-functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="#hold"><span class="std std-ref">Hold</span></a></li>
+<li><a class="reference internal" href="#lag"><span class="std std-ref">Lag</span></a></li>
+<li><a class="reference internal" href="#last"><span class="std std-ref">Last</span></a></li>
+<li><a class="reference internal" href="#onchange"><span class="std std-ref">OnChange</span></a></li>
+<li><a class="reference internal" href="#snapshot"><span class="std std-ref">Snapshot</span></a></li>
+<li><a class="reference internal" href="#timestamp"><span class="std std-ref">Timestamp</span></a></li>
+</ul>
+</div>
+<div class="section" id="event-combining-functions">
+<span id="eventcomb"></span><h2><strong>Event Combining Functions</strong><a class="headerlink" href="#event-combining-functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="#any"><span class="std std-ref">Any</span></a></li>
+<li><a class="reference internal" href="#join"><span class="std std-ref">Join</span></a></li>
+</ul>
+</div>
+<div class="section" id="event-filtering-functions">
+<span id="eventfilter"></span><h2><strong>Event Filtering Functions</strong><a class="headerlink" href="#event-filtering-functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="#filter"><span class="std std-ref">Filter</span></a></li>
+<li><a class="reference internal" href="#select"><span class="std std-ref">Select</span></a></li>
+</ul>
+</div>
+<div class="section" id="with-initial">
+<span id="winitial"></span><h2><strong>With Initial</strong><a class="headerlink" href="#with-initial" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="#withinitial"><span class="std std-ref">WithInitial</span></a></li>
+</ul>
+</div>
+<div class="section" id="logical-operators">
+<span id="logicalops"></span><h2><strong>Logical Operators</strong><a class="headerlink" href="#logical-operators" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="#logicaloperators"><span class="std std-ref">And, Not, Or, Xor</span></a></li>
+</ul>
+</div>
+<div class="section" id="all-functions">
+<h2><strong>All Functions</strong><a class="headerlink" href="#all-functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="#any"><span class="std std-ref">Any</span></a></li>
+<li><a class="reference internal" href="#clock"><span class="std std-ref">Clock</span></a></li>
+<li><a class="reference internal" href="#filter"><span class="std std-ref">Filter</span></a></li>
+<li><a class="reference internal" href="#hold"><span class="std std-ref">Hold</span></a></li>
+<li><a class="reference internal" href="#join"><span class="std std-ref">Join</span></a></li>
+<li><a class="reference internal" href="#lag"><span class="std std-ref">Lag</span></a></li>
+<li><a class="reference internal" href="#last"><span class="std std-ref">Last</span></a></li>
+<li><a class="reference internal" href="#onchange"><span class="std std-ref">OnChange</span></a></li>
+<li><a class="reference internal" href="#quote"><span class="std std-ref">Quote</span></a></li>
+<li><a class="reference internal" href="#select"><span class="std std-ref">Select</span></a></li>
+<li><a class="reference internal" href="#snapshot"><span class="std std-ref">Snapshot</span></a></li>
+<li><a class="reference internal" href="#timestamp"><span class="std std-ref">Timestamp</span></a></li>
+<li><a class="reference internal" href="#trade"><span class="std std-ref">Trade</span></a></li>
+<li><a class="reference internal" href="#withinitial"><span class="std std-ref">WithInitial</span></a></li>
+</ul>
+<div class="section" id="and-not-or-xor">
+<span id="logicaloperators"></span><h3><strong>And, Not, Or, Xor</strong><a class="headerlink" href="#and-not-or-xor" title="Permalink to this headline">¶</a></h3>
+<p>( <a class="reference internal" href="#logicalops"><span class="std std-ref">Logical Operators</span></a> )</p>
+<p>The DSL implements its own logical operators to work with the Node based structure.
+It does not change much except that instead of using the python diction for and, not, and or
+(no python diction for xor) you use And(args), Not(x), Or(args), Xor(args).</p>
+<p>So for example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">trade</span> <span class="o">=</span> <span class="n">Trade</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+<span class="n">same_price</span> <span class="o">=</span> <span class="p">(</span><span class="n">trade</span><span class="o">.</span><span class="n">price</span> <span class="o">==</span> <span class="n">Last</span><span class="p">(</span><span class="n">trade</span><span class="o">.</span><span class="n">price</span><span class="p">))</span>
+<span class="n">same_qty</span> <span class="o">=</span> <span class="p">(</span><span class="n">trade</span><span class="o">.</span><span class="n">qty</span> <span class="o">==</span> <span class="n">Last</span><span class="p">(</span><span class="n">trade</span><span class="o">.</span><span class="n">qty</span><span class="p">))</span>
+
+<span class="n">myAnd</span> <span class="o">=</span> <span class="n">And</span><span class="p">(</span><span class="n">same_price</span><span class="p">,</span> <span class="n">same_qty</span><span class="p">)</span>
+<span class="n">myNot</span> <span class="o">=</span> <span class="n">Not</span><span class="p">(</span><span class="n">same_price</span><span class="p">)</span>
+<span class="n">myOr</span> <span class="o">=</span> <span class="n">Or</span><span class="p">(</span><span class="n">same_price</span><span class="p">,</span> <span class="n">same_qty</span><span class="p">)</span>
+<span class="n">myXor</span> <span class="o">=</span> <span class="n">Xor</span><span class="p">(</span><span class="n">same_price</span><span class="p">,</span> <span class="n">same_qty</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><strong>myAnd</strong> will now be a true condition if, for the latest <a class="reference internal" href="#trade"><span class="std std-ref">Trade</span></a> ‘trade’ and the trade before it
+(<a class="reference internal" href="#last"><span class="std std-ref">Last</span></a> trade), the price and quantity of both trades was the same</li>
+<li><strong>myNot</strong> will be a true condition if the piece of the two trades were different</li>
+<li><strong>myOr</strong> will be a true condition if either the price or quantity of the trades were the same</li>
+<li><strong>myXor</strong> will be a true condition if only the price or only the quantity was the same in both trades</li>
+</ul>
+<p>You can now pass these as the ‘condition’ for the functions that require one ( <a class="reference internal" href="#filter"><span class="std std-ref">Filter</span></a> and <a class="reference internal" href="#select"><span class="std std-ref">Select</span></a> )</p>
+</div>
+<div class="section" id="any">
+<span id="id2"></span><h3><strong>Any</strong><a class="headerlink" href="#any" title="Permalink to this headline">¶</a></h3>
+<p>( <a class="reference internal" href="#eventcomb"><span class="std std-ref">Event Combining Functions</span></a> )</p>
+<span class="target" id="module-atomlib"></span><dl class="function">
+<dt id="atomlib.Any">
+<code class="descclassname">atomlib.</code><code class="descname">Any</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#atomlib.Any" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Takes at least two ‘args’ which have to be event nodes (Clock, Trade, Quote)</em></p>
+<p><em>returns the event which happened most recently</em></p>
+</dd></dl>
+
+<p>Any requires at least two <a class="reference internal" href="#events"><span class="std std-ref">Events</span></a> as arguments, and will return the latest event to have triggered.</p>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">Clock</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">Quote</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+<span class="n">trade</span> <span class="o">=</span> <span class="n">Trade</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+<span class="n">event</span> <span class="o">=</span> <span class="n">Any</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">trade</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Event is now set up such that it is reading from c, q, and trade ( <a class="reference internal" href="#clock"><span class="std std-ref">Clock</span></a> , <a class="reference internal" href="#quote"><span class="std std-ref">Quote</span></a> or <a class="reference internal" href="#trade"><span class="std std-ref">Trade</span></a> events).
+Specifically when the valuation function is being executed in the model, event will contain the event which happened
+most recently at that given time. Each iteration of the valuation function can contain either the same event or
+a different one as it is dependent on the live changes of the given Quote and Trade passed as its arguments.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="85%" />
+<col width="15%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">‘event’ most recent first</th>
+<th class="head">index</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>‘trade’</td>
+<td>1</td>
+</tr>
+<tr class="row-odd"><td>‘q’</td>
+<td>2</td>
+</tr>
+<tr class="row-even"><td>‘q’</td>
+<td>3</td>
+</tr>
+<tr class="row-odd"><td>‘c’</td>
+<td>4</td>
+</tr>
+<tr class="row-even"><td>‘q’</td>
+<td>5</td>
+</tr>
+<tr class="row-odd"><td>‘trade’</td>
+<td>6</td>
+</tr>
+<tr class="row-even"><td>‘c’</td>
+<td>7</td>
+</tr>
+<tr class="row-odd"><td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+<p>This means if there is something you would want to do every iteration of the valuation function, regardless of the event,
+you wont have to write the same line of code two or three times. For example, it allows you to do things like using
+<a class="reference internal" href="#timestamp"><span class="std std-ref">Timestamp</span></a> to figure out the time between events regardless of the type of event that happened before:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">last_event_timestamp</span> <span class="o">=</span> <span class="n">Last</span><span class="p">(</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">event</span><span class="p">))</span>
+<span class="n">delta_time</span> <span class="o">=</span> <span class="n">Timestamp</span><span class="p">(</span><span class="n">event</span><span class="p">)</span> <span class="o">-</span> <span class="n">last_event_timestamp</span>
+</pre></div>
+</div>
+<p>Similar to <a class="reference internal" href="#events"><span class="std std-ref">Events</span></a> an Any node will have a record of its changes which can be accessed using <a class="reference internal" href="#last"><span class="std std-ref">Last</span></a> or <a class="reference internal" href="#lag"><span class="std std-ref">Lag</span></a></p>
+<p>It can also be used as an argument with already initialized events to check if they are the most recent active event during an iteration
+of the valuation function. For example using <a class="reference internal" href="#filter"><span class="std std-ref">Filter</span></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">Clock</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">Quote</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+<span class="n">trade</span> <span class="o">=</span> <span class="n">Trade</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+<span class="n">event</span> <span class="o">=</span> <span class="n">Any</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">trade</span><span class="p">)</span>
+<span class="n">noTrade</span> <span class="o">=</span> <span class="n">Filter</span><span class="p">(</span><span class="n">Any</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">q</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This would assign 0 to ‘noTrade’ if c or q were the most recent event.</p>
+</div>
+<div class="section" id="clock">
+<span id="id3"></span><h3><strong>Clock</strong><a class="headerlink" href="#clock" title="Permalink to this headline">¶</a></h3>
+<p>( <a class="reference internal" href="#events"><span class="std std-ref">Events</span></a> )</p>
+<span class="target" id="module-atomlib"></span><dl class="function">
+<dt id="atomlib.Clock">
+<code class="descclassname">atomlib.</code><code class="descname">Clock</code><span class="sig-paren">(</span><em>period</em><span class="sig-paren">)</span><a class="headerlink" href="#atomlib.Clock" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>period is an int representing microsecoinds</em></p>
+<p><em>will keep track of the time passed, event is registered when the time ‘period’ is reached</em></p>
+</dd></dl>
+
+<p>Clock will keep track of the time passed, where an event is registered every time the period is reached.</p>
+<p>It’s use is to have a way to know that there were no changes to the events in the valuation function between iterations
+which can be used to skip to a specific part of the function or go to the next iteration.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">Clock</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">Quote</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+<span class="n">trade</span> <span class="o">=</span> <span class="n">Trade</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+<span class="n">event</span> <span class="o">=</span> <span class="n">Any</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">trade</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here <a class="reference internal" href="#any"><span class="std std-ref">Any</span></a> would contain c if the period of 100 microseconds passed and none of
+the other arguments have triggered (in this case, for the ‘symbol’ a new <a class="reference internal" href="#quote"><span class="std std-ref">Quote</span></a> was not
+registered in the book and no <a class="reference internal" href="#trade"><span class="std std-ref">Trade</span></a> was executed)</p>
+</div>
+<div class="section" id="filter">
+<span id="id4"></span><h3><strong>Filter</strong><a class="headerlink" href="#filter" title="Permalink to this headline">¶</a></h3>
+<p>( <a class="reference internal" href="#eventfilter"><span class="std std-ref">Event Filtering Functions</span></a> )</p>
+<span class="target" id="module-atomlib"></span><dl class="function">
+<dt id="atomlib.Filter">
+<code class="descclassname">atomlib.</code><code class="descname">Filter</code><span class="sig-paren">(</span><em>cond</em>, <em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#atomlib.Filter" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Checks if the condition ‘cond’ is true, where
+‘cond’ must be a conditional Node.</em></p>
+<p><em>returns ‘x’ if condition is true. x is a an event or value node</em></p>
+</dd></dl>
+
+<p>Filter allows you to assign values to a variable only if a specific condition you choose is met.</p>
+<p>For example if you want a variable ‘z’ assigned to 0 only if there
+was no change in the price of a Trade you could write:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">trade</span> <span class="o">=</span> <span class="n">Tade</span><span class="p">(</span><span class="s1">&#39;symbol&#39;</span><span class="p">)</span>
+<span class="n">last_trade</span> <span class="o">=</span> <span class="n">Last</span><span class="p">(</span><span class="n">trade</span><span class="p">)</span>
+<span class="n">samePrice</span> <span class="o">=</span> <span class="p">(</span><span class="n">trade</span><span class="o">.</span><span class="n">price</span> <span class="o">==</span> <span class="n">last_trade</span><span class="o">.</span><span class="n">price</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">Filter</span><span class="p">(</span><span class="n">samePrice</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now if the trade price in a given iteration has not changed z will contain a constant node of value 0</p>
+<p>It is important to note that the DSL works through nodes and implements its own relational, arithmetic, and logical
+relationships, so even though it looks similar a python Boolean cannot be passed, i.e this would not work:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">py_bool</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">Filter</span><span class="p">(</span><span class="n">py_bool</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="hold">
+<span id="id5"></span><h3><strong>Hold</strong><a class="headerlink" href="#hold" title="Permalink to this headline">¶</a></h3>
+<p>( <a class="reference internal" href="#eventfuncs"><span class="std std-ref">Event Functions</span></a> )</p>
+<span class="target" id="module-atomlib"></span><dl class="function">
+<dt id="atomlib.Hold">
+<code class="descclassname">atomlib.</code><code class="descname">Hold</code><span class="sig-paren">(</span><em>x</em>, <em>initial_value=None</em><span class="sig-paren">)</span><a class="headerlink" href="#atomlib.Hold" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>evaluates ‘x’ and stores it (if x is an attribute which has not been triggered yet, will store ‘None’)</em></p>
+<p><em>will check if there is a change in ‘x’ and store the change</em></p>
+</dd></dl>
+
+<p>Hold can store any value which you need to use in future iterations of your
+valuation function.</p>
+<p>For example lets say you need to do a calculation with the latest trade price, but a given iteration of the
+function there might not be any new trades so you would have to use the last registered price, you could do
+so by assigning a variable Hold with the trade price. Like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">trade</span> <span class="o">=</span> <span class="n">Trade</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+<span class="n">trade_price</span> <span class="o">=</span> <span class="n">Hold</span><span class="p">(</span><span class="n">trade</span><span class="o">.</span><span class="n">price</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now every time the valuation function runs, it will have a value with the latest trade price.
+So for example if the model is running and for the first four iterations, on the first iteration
+there is no trade, then trade_price would have ‘None’. On the second, if there was a trade then
+it would hold that price. On the third iteration, if there is no trade the value being held would
+stay the same. If on the fourth there is a new trade then the new price will now be held.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="38%" />
+<col width="9%" />
+<col width="11%" />
+<col width="22%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">iteration</th>
+<th class="head">1</th>
+<th class="head">2</th>
+<th class="head">3</th>
+<th class="head">4</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>trade_price value</td>
+<td>None</td>
+<td>price</td>
+<td>same price</td>
+<td>new price</td>
+</tr>
+</tbody>
+</table>
+<p>So no matter whether or not there was a trade for any given execution of the valuation function
+you are always able to make a calculation using trade_price</p>
+<p>For a detailed look on hold go to <a class="reference internal" href="tutorial.html#whyusehold"><span class="std std-ref">Why Use Hold</span></a></p>
+</div>
+<div class="section" id="join">
+<span id="id6"></span><h3><strong>Join</strong><a class="headerlink" href="#join" title="Permalink to this headline">¶</a></h3>
+<p>( <a class="reference internal" href="#eventcomb"><span class="std std-ref">Event Combining Functions</span></a> )</p>
+<span class="target" id="module-atomlib"></span><dl class="function">
+<dt id="atomlib.Join">
+<code class="descclassname">atomlib.</code><code class="descname">Join</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#atomlib.Join" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>‘args’ must be nodes of the same type, and there must be at least 2</em></p>
+<p>returns most recent active node</p>
+</dd></dl>
+
+<p>Similar to <a class="reference internal" href="#any"><span class="std std-ref">Any</span></a> it can read from multiple nodes, but whereas Any holds only <a class="reference internal" href="#events"><span class="std std-ref">Events</span></a> , Join can read from other
+node types, but all the nodes that are passed into a join they must be of the same type.</p>
+<p>Join will contain the node which was ‘activated’ most recently. For example passing two <a class="reference internal" href="#filter"><span class="std std-ref">Filter</span></a> nodes</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">trade</span> <span class="o">=</span> <span class="n">Trade</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+<span class="n">same_price</span> <span class="o">=</span> <span class="p">(</span><span class="n">trade</span><span class="o">.</span><span class="n">price</span> <span class="o">==</span> <span class="n">Last</span><span class="p">(</span><span class="n">trade</span><span class="o">.</span><span class="n">price</span><span class="p">))</span>
+<span class="n">same_qty</span> <span class="o">=</span> <span class="p">(</span><span class="n">trade</span><span class="o">.</span><span class="n">qty</span> <span class="o">==</span> <span class="n">Last</span><span class="p">(</span><span class="n">trade</span><span class="o">.</span><span class="n">qty</span><span class="p">))</span>
+
+<span class="n">bothOrOne</span> <span class="o">=</span> <span class="n">Join</span><span class="p">(</span><span class="n">Filter</span><span class="p">(</span><span class="n">And</span><span class="p">(</span><span class="n">same_price</span><span class="p">,</span> <span class="n">same_qty</span><span class="p">),</span> <span class="mi">5</span><span class="p">),</span> <span class="n">Filter</span><span class="p">(</span><span class="n">Xor</span><span class="p">(</span><span class="n">same_price</span><span class="p">,</span> <span class="n">same_qty</span><span class="p">),</span> <span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>bothOrOne will have a Join which contains two Filters, so for a given iteration of the valuation function if either
+of these filters in the join activates, then join will contain that filter. The first filter checks if, for a the two
+latest  trades, the price and quantity stayed the same, and returns 5, meaning bothOrOne will have the value 5. The second filter
+checks if only the price or only the quantity stayed the same, and returns 10 if so, thus bothOrOne would have the value 10.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="85%" />
+<col width="15%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">‘bothOrOne’ most recent first</th>
+<th class="head">index</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>5</td>
+<td>1</td>
+</tr>
+<tr class="row-odd"><td>10</td>
+<td>2</td>
+</tr>
+<tr class="row-even"><td>5</td>
+<td>3</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>4</td>
+</tr>
+<tr class="row-even"><td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+<p>Note that for any give iteration of the valuation function there may not be a <a class="reference internal" href="#trade"><span class="std std-ref">Trade</span></a> that executed
+therefore bothOrOne will not be executed, this is fine where the register will only contain the values
+for when it was executed. For example:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="49%" />
+<col width="11%" />
+<col width="14%" />
+<col width="11%" />
+<col width="14%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">iteration</th>
+<th class="head">1</th>
+<th class="head">2</th>
+<th class="head">3</th>
+<th class="head">4</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>bothOrOne value</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>5</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="lag">
+<span id="id7"></span><h3><strong>Lag</strong><a class="headerlink" href="#lag" title="Permalink to this headline">¶</a></h3>
+<p>( <a class="reference internal" href="#eventfuncs"><span class="std std-ref">Event Functions</span></a> )</p>
+<span class="target" id="module-atomlib"></span><dl class="function">
+<dt id="atomlib.Lag">
+<code class="descclassname">atomlib.</code><code class="descname">Lag</code><span class="sig-paren">(</span><em>x</em>, <em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#atomlib.Lag" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>‘x’ is an event, ‘n’ is an index in the form of an integer &gt; 0</em></p>
+<p><em>will return the n’th record of event x</em></p>
+</dd></dl>
+
+<p>When an event is assigned to a variable, whenever there is a change and an event is
+registered, the event variable is updated, but the past version of the event variable
+is stored in an array in memory. Lag allows you to access this array, where n is the index.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">trade</span> <span class="o">=</span> <span class="n">Trade</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+<span class="n">fiveBack</span> <span class="o">=</span> <span class="n">Lag</span><span class="p">(</span><span class="n">trade</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Trade(symbol) creates a node where its attributes and changes are stored in an array:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="69%" />
+<col width="12%" />
+<col width="19%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Trades of ‘symbol’</th>
+<th class="head">index</th>
+<th class="head">fiveBack</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Info on most recent tarde</td>
+<td>1</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>Info on Last trade</td>
+<td>2</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>Info on 3rd most recent trade</td>
+<td>3</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>Info on 4th most recent trade</td>
+<td>4</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>Info on 5th most recent trade</td>
+<td>5</td>
+<td>&lt;—</td>
+</tr>
+<tr class="row-odd"><td>…</td>
+<td>…</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+<p>fiveBack would point to index 5, and as more trades are registered the array will change but fiveBack
+will still point to index 5.</p>
+<p>( <a class="reference internal" href="#last"><span class="std std-ref">Last</span></a> is the equivalent of Lag(x, 1) )</p>
+</div>
+<div class="section" id="last">
+<span id="id8"></span><h3><strong>Last</strong><a class="headerlink" href="#last" title="Permalink to this headline">¶</a></h3>
+<p>( <a class="reference internal" href="#eventfuncs"><span class="std std-ref">Event Functions</span></a> )</p>
+<span class="target" id="module-atomlib"></span><dl class="function">
+<dt id="atomlib.Last">
+<code class="descclassname">atomlib.</code><code class="descname">Last</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#atomlib.Last" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>‘x’ is an event</em></p>
+<p><em>return the last event triggered by the event x</em></p>
+</dd></dl>
+
+<p>When an event is assigned to a variable, whenever there is a change and an event is
+registered, the event variable is updated, but the past version of the event variable
+is stored. Last allows you to access the most recent registered event prior to the
+current one.</p>
+<p>Example of it being used to save the latest <a class="reference internal" href="#timestamp"><span class="std std-ref">Timestamp</span></a> of an event</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">trade</span> <span class="o">=</span> <span class="n">Trade</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+    <span class="n">quote</span> <span class="o">=</span> <span class="n">Quote</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+    <span class="n">event</span> <span class="o">=</span> <span class="n">Any</span><span class="p">(</span><span class="n">trade</span><span class="p">,</span> <span class="n">quote</span><span class="p">)</span>
+<span class="n">last_event_timestamp</span> <span class="o">=</span> <span class="n">Last</span><span class="p">(</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">event</span><span class="p">))</span>
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="54%" />
+<col width="9%" />
+<col width="37%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Timstamps of ‘event’</th>
+<th class="head">index</th>
+<th class="head">last_event_timestamp</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>most recent timestamp</td>
+<td>1</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>Last timestamp</td>
+<td>2</td>
+<td>&lt;—</td>
+</tr>
+<tr class="row-even"><td>3rd most recent timestamp</td>
+<td>3</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>…</td>
+<td>…</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+<p>here since we are using an event with <a class="reference internal" href="#any"><span class="std std-ref">Any</span></a> there is a register of the timestamps when any of the events
+are registered regardless of the type of event. last_event_timestamp will have the time at which the event
+directly before the most recent event happened.</p>
+</div>
+<div class="section" id="onchange">
+<span id="id9"></span><h3><strong>OnChange</strong><a class="headerlink" href="#onchange" title="Permalink to this headline">¶</a></h3>
+<p>( <a class="reference internal" href="#eventfuncs"><span class="std std-ref">Event Functions</span></a> )</p>
+<span class="target" id="module-atomlib"></span><dl class="function">
+<dt id="atomlib.OnChange">
+<code class="descclassname">atomlib.</code><code class="descname">OnChange</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#atomlib.OnChange" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>takes an event ‘x’</em></p>
+<p><em>if event has changed returns updated event x</em></p>
+</dd></dl>
+
+<p>Call OnChange with an <a class="reference internal" href="#events"><span class="std std-ref">Events</span></a> to check when the event has been updated</p>
+<p>i.e for <a class="reference internal" href="#trade"><span class="std std-ref">Trade</span></a> when a trade has been executed, for <a class="reference internal" href="#quote"><span class="std std-ref">Quote</span></a> when there is a change in the book,
+for <a class="reference internal" href="#clock"><span class="std std-ref">Clock</span></a> when the period has been reached.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">trade</span> <span class="o">=</span> <span class="n">Trade</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+<span class="n">mostRecentTrade</span> <span class="o">=</span> <span class="n">OnChange</span><span class="p">(</span><span class="n">trade</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>mostRecentTrade will always contain the latest trade to have actually happened.</p>
+</div>
+<div class="section" id="quote">
+<span id="id10"></span><h3><strong>Quote</strong><a class="headerlink" href="#quote" title="Permalink to this headline">¶</a></h3>
+<p>( <a class="reference internal" href="#events"><span class="std std-ref">Events</span></a> )</p>
+<span class="target" id="module-atomlib"></span><dl class="function">
+<dt id="atomlib.Quote">
+<code class="descclassname">atomlib.</code><code class="descname">Quote</code><span class="sig-paren">(</span><em>symbol</em><span class="sig-paren">)</span><a class="headerlink" href="#atomlib.Quote" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>symbol: security symbol in the form of a string</em></p>
+<p><em>Returns a QuoteNode</em></p>
+</dd></dl>
+
+<p>Calling Quote with a security symbol will return a Quote Node which will have the following attributes:</p>
+<ul class="simple">
+<li><em>Quote.bid_qty[ i ]</em> bid qyuantity at i’th position in the book</li>
+<li><em>Quote.ask_qty[ i ]</em> ask quantity at i’th position in the book</li>
+<li><em>Quote.bid_price[ i ]</em> bid price at i’th position in the book</li>
+<li><em>Quote.ask_price[ i ]</em> ask price at i’th position in the book</li>
+</ul>
+<p>This will allow you to check the bid price/quantity and ask bid/quanitity for the first 5 levels in the book
+of the given security symbol (the inside quote is at i = 0)</p>
+<p>Quote:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="19%" />
+<col width="23%" />
+<col width="23%" />
+<col width="16%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">.bid_qty</th>
+<th class="head">.ask_qty</th>
+<th class="head">.bid_price</th>
+<th class="head">.ask_price</th>
+<th class="head">level</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>bid_qty[ 0 ]</td>
+<td>ask_qty[ 0 ]</td>
+<td>bid_price[ 0 ]</td>
+<td>ask_price[ 0 ]</td>
+<td>Inside (1)</td>
+</tr>
+<tr class="row-odd"><td>bid_qty[ 1 ]</td>
+<td>ask_qty[ 1 ]</td>
+<td>bid_price[ 1 ]</td>
+<td>ask_price[ 1 ]</td>
+<td>2</td>
+</tr>
+<tr class="row-even"><td>bid_qty[ 2 ]</td>
+<td>ask_qty[ 2 ]</td>
+<td>bid_price[ 2 ]</td>
+<td>ask_price[ 2 ]</td>
+<td>3</td>
+</tr>
+<tr class="row-odd"><td>bid_qty[ 3 ]</td>
+<td>ask_qty[ 3 ]</td>
+<td>bid_price[ 3 ]</td>
+<td>ask_price[ 3 ]</td>
+<td>4</td>
+</tr>
+<tr class="row-even"><td>bid_qty[ 4 ]</td>
+<td>ask_qty[ 4 ]</td>
+<td>bid_price[ 4 ]</td>
+<td>ask_price[ 4 ]</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>Here is a useful example of using quote to assign an inside bid price using <a class="reference internal" href="#select"><span class="std std-ref">Select</span></a> based on whether the
+inside bid quantity is within the size threshold (a value you can determine)</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">q</span> <span class="o">=</span> <span class="n">Quote</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+<span class="n">inside_bid_price</span> <span class="o">=</span> <span class="n">Select</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">bid_qty</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">size_threshold</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">bid_price</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">q</span><span class="o">.</span><span class="n">bid_price</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>If the bid quantity of the inside bid is less than or equal to your determined threshold, then assign the <a class="reference internal" href="#last"><span class="std std-ref">Last</span></a>
+bid price q.bid_price[1] as your desired inside bid price, otherwise use the actual inside bid price ‘q.bid_price[0]’</p>
+</div>
+<div class="section" id="select">
+<span id="id11"></span><h3><strong>Select</strong><a class="headerlink" href="#select" title="Permalink to this headline">¶</a></h3>
+<p>( <a class="reference internal" href="#eventfilter"><span class="std std-ref">Event Filtering Functions</span></a> )</p>
+<span class="target" id="module-atomlib"></span><dl class="function">
+<dt id="atomlib.Select">
+<code class="descclassname">atomlib.</code><code class="descname">Select</code><span class="sig-paren">(</span><em>cond</em>, <em>a</em>, <em>b</em><span class="sig-paren">)</span><a class="headerlink" href="#atomlib.Select" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Checks if the condition ‘cond’ is true, where
+‘cond’ must be a conditional Node.</em></p>
+<p><em>returns ‘a’ if condition is true and ‘b’ otherwise.
+‘a’ and ‘b’ are event or value nodes</em></p>
+</dd></dl>
+
+<p>Select is essentially the DSL’s implementation of ‘If Else’</p>
+<p>You can use this for a variety of calculations where you want to assign values based on whether a condition is met
+like on the example used in <a class="reference internal" href="#quote"><span class="std std-ref">Quote</span></a> assigning a desired inside bid price only when the current inside bid
+quantity is within a desired threshold:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">q</span> <span class="o">=</span> <span class="n">Quote</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+<span class="n">inside_bid_price</span> <span class="o">=</span> <span class="n">Select</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">bid_qty</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">size_threshold</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">bid_price</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">q</span><span class="o">.</span><span class="n">bid_price</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>If the bid quantity of the inside bid is less than or equal to your determined threshold, then assign the <a class="reference internal" href="#last"><span class="std std-ref">Last</span></a>
+bid price (q.bid_price[1]) as your desired inside bid price, otherwise assign it to the actual inside bid price (q.bid_price[0]).</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="32%" />
+<col width="6%" />
+<col width="21%" />
+<col width="21%" />
+<col width="21%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">iteration</th>
+<th class="head">1</th>
+<th class="head">2</th>
+<th class="head">3</th>
+<th class="head">4</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>inside_bid_price value</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>q.bid_price[1]</td>
+<td>q.bid_price[0]</td>
+<td>q.bid_price[0]</td>
+</tr>
+</tbody>
+</table>
+<p>Note that for any give iteration of the valuation function there may not be a <a class="reference internal" href="#quote"><span class="std std-ref">Quote</span></a> that executed
+therefore inside_bid_price will not be executed, in this example the first iteration, this is fine.</p>
+</div>
+<div class="section" id="snapshot">
+<span id="id12"></span><h3><strong>Snapshot</strong><a class="headerlink" href="#snapshot" title="Permalink to this headline">¶</a></h3>
+<p>( <a class="reference internal" href="#eventfuncs"><span class="std std-ref">Event Functions</span></a> )</p>
+<span class="target" id="module-atomlib"></span><dl class="function">
+<dt id="atomlib.Snapshot">
+<code class="descclassname">atomlib.</code><code class="descname">Snapshot</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#atomlib.Snapshot" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>x is is an int &gt; 0, and y is an event node</em></p>
+<p><em>returns y event at x level</em></p>
+</dd></dl>
+
+<p>Think of Snapshot as a mix of <a class="reference internal" href="#hold"><span class="std std-ref">Hold</span></a> and <a class="reference internal" href="#lag"><span class="std std-ref">Lag</span></a>, where you pass an event node ‘y’ and a level ‘x’
+where this will hold the x’th index of that event. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">trade</span> <span class="o">=</span> <span class="n">Trade</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+    <span class="n">snapTrade</span> <span class="o">=</span> <span class="n">Snapshot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">trade</span><span class="p">)</span>
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="63%" />
+<col width="20%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Trades of ‘symbol’</th>
+<th class="head">index ‘x’</th>
+<th class="head">fiveBack</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Info on most recent tarde</td>
+<td>1</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>Info on Last trade</td>
+<td>2</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>Info on 3rd most recent trade</td>
+<td>3</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>Info on 4th most recent trade</td>
+<td>4</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>Info on 5th most recent trade</td>
+<td>5</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>…</td>
+<td>…</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+<p>snapTrade will hold a the value at the third index stored and can be used at any iteration of the valuation function
+regardless of whether there was a  <a class="reference internal" href="#trade"><span class="std std-ref">Trade</span></a> event that iteration or not.</p>
+</div>
+<div class="section" id="timestamp">
+<span id="id13"></span><h3><strong>Timestamp</strong><a class="headerlink" href="#timestamp" title="Permalink to this headline">¶</a></h3>
+<p>( <a class="reference internal" href="#eventfuncs"><span class="std std-ref">Event Functions</span></a> )</p>
+<span class="target" id="module-atomlib"></span><dl class="function">
+<dt id="atomlib.Timestamp">
+<code class="descclassname">atomlib.</code><code class="descname">Timestamp</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#atomlib.Timestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>x must be an event node</em></p>
+<p><em>returns the time at which an event happened</em></p>
+</dd></dl>
+
+<p>Here is an example of it being used to get the change in time between the latest event and the most recent
+using <a class="reference internal" href="#any"><span class="std std-ref">Any</span></a> with <a class="reference internal" href="#clock"><span class="std std-ref">Clock</span></a> , <a class="reference internal" href="#quote"><span class="std std-ref">Quote</span></a> and <a class="reference internal" href="#trade"><span class="std std-ref">Trade</span></a></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">Clock</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">Quote</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+<span class="n">trade</span> <span class="o">=</span> <span class="n">Trade</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+<span class="n">event</span> <span class="o">=</span> <span class="n">Any</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">trade</span><span class="p">)</span>
+<span class="n">last_event_timestamp</span> <span class="o">=</span> <span class="n">Last</span><span class="p">(</span><span class="n">Timestamp</span><span class="p">(</span><span class="n">event</span><span class="p">))</span>
+<span class="n">delta_time</span> <span class="o">=</span> <span class="n">Timestamp</span><span class="p">(</span><span class="n">event</span><span class="p">)</span> <span class="o">-</span> <span class="n">last_event_timestamp</span>
+</pre></div>
+</div>
+<p>Timestamp also keeps a register of its changes like events do, so delta_time will always have the time difference between
+the last two events regardless of the type of event they were.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="38%" />
+<col width="16%" />
+<col width="6%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Timstamps of ‘event’</th>
+<th class="head">event</th>
+<th class="head">index</th>
+<th class="head">delta_time = (a - b)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>most recent timestamp</td>
+<td>‘trade’</td>
+<td>1</td>
+<td>&lt;—  a (Timestamp(event))</td>
+</tr>
+<tr class="row-odd"><td>Last timestamp</td>
+<td>‘q’</td>
+<td>2</td>
+<td>&lt;—  b (Last(Timstamp(event)))</td>
+</tr>
+<tr class="row-even"><td>3rd most recent timestamp</td>
+<td>‘c’</td>
+<td>3</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>…</td>
+<td>…</td>
+<td>…</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="trade">
+<span id="id14"></span><h3><strong>Trade</strong><a class="headerlink" href="#trade" title="Permalink to this headline">¶</a></h3>
+<p>( <a class="reference internal" href="#events"><span class="std std-ref">Events</span></a> )</p>
+<span class="target" id="module-atomlib"></span><dl class="function">
+<dt id="atomlib.Trade">
+<code class="descclassname">atomlib.</code><code class="descname">Trade</code><span class="sig-paren">(</span><em>symbol</em><span class="sig-paren">)</span><a class="headerlink" href="#atomlib.Trade" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Using the given security symbol will return a Trade node</em></p>
+</dd></dl>
+
+<p>The Trade Node will keep track of the latest trades in the market for the given security symbol.
+This will allow you to check if and what trade happened last.</p>
+<p>Calling Trade with a security symbol will return a Trade Node which will have the following attributes:</p>
+<ul class="simple">
+<li><em>Trade.price</em> returns the price of the last trade</li>
+<li><em>Trade.qty</em> returns the quantity of the last trade</li>
+<li><em>Trade.side</em> returns which side of the book the trade happened in</li>
+</ul>
+<p>Allowing you to access the price, quantity and side of the most recent trade to have actually executed.
+Combine Trade with other functions such as (<a class="reference internal" href="#last"><span class="std std-ref">Last</span></a> and <a class="reference internal" href="#lag"><span class="std std-ref">Lag</span></a>) to get the attributes for earlier
+trades to have happened.</p>
+<p>Trade:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="31%" />
+<col width="35%" />
+<col width="34%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">.price</th>
+<th class="head">.qty</th>
+<th class="head">.side</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>most recent trade price</td>
+<td>most recent trade quantity</td>
+<td>side of most recent trade</td>
+</tr>
+<tr class="row-odd"><td>last trade price</td>
+<td>last trade quantity</td>
+<td>side of last trade</td>
+</tr>
+<tr class="row-even"><td>3rd most recent trade price</td>
+<td>3rd most recent trade quantity</td>
+<td>side of 3rd most recent trade</td>
+</tr>
+</tbody>
+</table>
+<p>Here is an example of using <a class="reference internal" href="#last"><span class="std std-ref">Last</span></a> to check if the trade price has changed or not</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">trade</span> <span class="o">=</span> <span class="n">Trade</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+<span class="n">last_trade</span> <span class="o">=</span> <span class="n">Last</span><span class="p">(</span><span class="n">trade</span><span class="p">)</span>
+<span class="n">same_price</span> <span class="o">=</span> <span class="p">(</span><span class="n">trade</span><span class="o">.</span><span class="n">price</span> <span class="o">==</span> <span class="n">last_trade</span><span class="o">.</span><span class="n">price</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>trade:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="48%" />
+<col width="8%" />
+<col width="43%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Trades of ‘symbol’</th>
+<th class="head">index</th>
+<th class="head">same_price = (a == b)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Info on most recent trade</td>
+<td>1</td>
+<td>&lt;—  a (trade.price)</td>
+</tr>
+<tr class="row-odd"><td>Info on Last trade</td>
+<td>2</td>
+<td>&lt;—  b (last_trade.price)</td>
+</tr>
+<tr class="row-even"><td>Info on 3rd most recent trade</td>
+<td>3</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>…</td>
+<td>…</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="withinitial">
+<span id="id15"></span><h3><strong>WithInitial</strong><a class="headerlink" href="#withinitial" title="Permalink to this headline">¶</a></h3>
+<p>( <a class="reference internal" href="#winitial"><span class="std std-ref">With Initial</span></a> )</p>
+<span class="target" id="module-atomlib"></span><dl class="function">
+<dt id="atomlib.WithInitial">
+<code class="descclassname">atomlib.</code><code class="descname">WithInitial</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#atomlib.WithInitial" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>with an initial value ‘value’ pass an anonymous function (lambda expression) which will execute with
+the initial value as a parameter</em></p>
+<p><em>the value returned by the anonymous function is saved to be used as the value the next time it is run.</em></p>
+<p><em>returns the value returned by the anonymous function</em></p>
+</dd></dl>
+
+<p>WithInitial is useful so you can do a certain calculation based on a given condition as well as using a running value
+that changes each time the calculation is done.</p>
+<p>For example let’s say that if the price has not changed between the most recent trade and the one before,
+then you want to decay the value of that price, and at every iteration of the valuation function if the price
+still has not changed then decay the value even further. You can do this as such:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">trade</span> <span class="o">=</span> <span class="n">Trade</span><span class="p">(</span><span class="n">symbol</span><span class="p">)</span>
+<span class="n">same_price</span> <span class="o">=</span> <span class="p">(</span><span class="n">trade</span><span class="o">.</span><span class="n">price</span> <span class="o">==</span> <span class="n">Last</span><span class="p">(</span><span class="n">trade</span><span class="o">.</span><span class="n">price</span><span class="p">))</span>
+<span class="n">decayedPrice</span> <span class="o">=</span> <span class="n">WithInitial</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)(</span><span class="k">lambda</span> <span class="n">decayed</span><span class="p">:</span> <span class="n">Select</span><span class="p">(</span><span class="n">same_price</span><span class="p">,</span> <span class="p">(</span><span class="n">decayed</span> <span class="o">*</span> <span class="n">decay</span><span class="p">)</span> <span class="o">+</span> <span class="n">trade</span><span class="o">.</span><span class="n">price</span><span class="p">,</span> <span class="n">trade</span><span class="o">.</span><span class="n">price</span><span class="p">))</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>In this example decayedPrice is initialized with withInitial where the variable ‘decayed’ is assigned
+an initial value of 0.0.</li>
+<li>It then runs the anonymous (lambda) function that in this case uses <a class="reference internal" href="#select"><span class="std std-ref">Select</span></a> to help</li>
+<li>it checks if the price in the last two trades has not changed (same_price) and if that is the case:<ul>
+<li>decayed is assigned the calculation of its own value multiplied by a pre-determined ‘decay’ to which
+the trade price is then added. (decayed * decay) + trade.price</li>
+<li>It is evident that the first time this happens since the initial value of decayed will be 0.0 then decayed will return
+the trade price.</li>
+<li>Further, since decayed will save the value it has, and at every iteration runs the calculation with its updated
+value, then the decay keeps changing each time the price does not change.</li>
+</ul>
+</li>
+<li>If same_price is not true and the price has changed:<ul>
+<li>decayed is assigned the trade price effectively re-starting the process.</li>
+</ul>
+</li>
+<li>each time this process executes ‘decayedPrice’ is assigned the running value of ‘decayed’</li>
+</ul>
+</div>
+</div>
+<div class="section" id="go-to">
+<h2>Go To<a class="headerlink" href="#go-to" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="index.html#home"><span class="std std-ref">Using Alpha Trading Labs</span></a></li>
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/logo.jpeg" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+
+<h3><a href="index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html"><strong>Getting Started</strong></a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><strong>Alpha Trading Labs DSL</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#events"><strong>Events</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#event-functions"><strong>Event Functions</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#event-combining-functions"><strong>Event Combining Functions</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#event-filtering-functions"><strong>Event Filtering Functions</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#with-initial"><strong>With Initial</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logical-operators"><strong>Logical Operators</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#all-functions"><strong>All Functions</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#and-not-or-xor"><strong>And, Not, Or, Xor</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#any"><strong>Any</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clock"><strong>Clock</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filter"><strong>Filter</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hold"><strong>Hold</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#join"><strong>Join</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lag"><strong>Lag</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#last"><strong>Last</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#onchange"><strong>OnChange</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#quote"><strong>Quote</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#select"><strong>Select</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#snapshot"><strong>Snapshot</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#timestamp"><strong>Timestamp</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#trade"><strong>Trade</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#withinitial"><strong>WithInitial</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#go-to">Go To</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="marketlib.html"><strong>Marketlib</strong></a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="tutorial.html" title="previous chapter"><strong>Getting Started</strong></a></li>
+      <li>Next: <a href="marketlib.html" title="next chapter"><strong>Marketlib</strong></a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Alpha Trading Labs.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/atomlib.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

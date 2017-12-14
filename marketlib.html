@@ -1,0 +1,408 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Marketlib &#8212; Alpha Trading Labs DSL documentation  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Alpha Trading Labs DSL" href="atomlib.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="marketlib">
+<span id="ml"></span><h1><strong>Marketlib</strong><a class="headerlink" href="#marketlib" title="Permalink to this headline">¶</a></h1>
+<p>Marketlib is a library of functions already imported by default on our application. There are some ready made
+valuation functions which you can use for your model to start off with. It also has some helper functions which
+you can use to help you write your own valuation functions.</p>
+<div class="section" id="helper-functions">
+<span id="helpfuncs"></span><h2><strong>Helper Functions</strong><a class="headerlink" href="#helper-functions" title="Permalink to this headline">¶</a></h2>
+<p>These can be used within your valuation function as short hands.</p>
+<ul class="simple">
+<li><a class="reference internal" href="#askprice"><span class="std std-ref">askPrice</span></a></li>
+<li><a class="reference internal" href="#askqty"><span class="std std-ref">askQty</span></a></li>
+<li><a class="reference internal" href="#bidprice"><span class="std std-ref">bidPrice</span></a></li>
+<li><a class="reference internal" href="#bidqty"><span class="std std-ref">bidQty</span></a></li>
+<li><a class="reference internal" href="#insideask"><span class="std std-ref">InsideAsk</span></a></li>
+<li><a class="reference internal" href="#insidebid"><span class="std std-ref">InsideBid</span></a></li>
+</ul>
+</div>
+<div class="section" id="valuation-functions">
+<span id="valfuncs"></span><h2><strong>Valuation Functions</strong><a class="headerlink" href="#valuation-functions" title="Permalink to this headline">¶</a></h2>
+<p>These are a variety of simple to more complex valuation functions you can apply to the model. These
+you could also use within your valuation function to build off of the result.</p>
+<ul class="simple">
+<li><a class="reference internal" href="#ct"><span class="std std-ref">CT</span></a></li>
+<li><a class="reference internal" href="#ema"><span class="std std-ref">EMA</span></a></li>
+<li><a class="reference internal" href="#expweightav"><span class="std std-ref">ExpWeightAv</span></a></li>
+<li><a class="reference internal" href="#midpt"><span class="std std-ref">Midpt</span></a></li>
+<li><a class="reference internal" href="#mp2"><span class="std std-ref">MP2</span></a></li>
+<li><a class="reference internal" href="#pricemultpremium"><span class="std std-ref">PriceMultPremium</span></a></li>
+<li><a class="reference internal" href="#sizewa"><span class="std std-ref">SizeWa</span></a></li>
+<li><a class="reference internal" href="#spread"><span class="std std-ref">Spread</span></a></li>
+</ul>
+</div>
+<div class="section" id="all-functions">
+<h2><strong>All Functions</strong><a class="headerlink" href="#all-functions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="#askprice"><span class="std std-ref">askPrice</span></a></li>
+<li><a class="reference internal" href="#askqty"><span class="std std-ref">askQty</span></a></li>
+<li><a class="reference internal" href="#bidprice"><span class="std std-ref">bidPrice</span></a></li>
+<li><a class="reference internal" href="#bidqty"><span class="std std-ref">bidQty</span></a></li>
+<li><a class="reference internal" href="#ct"><span class="std std-ref">CT</span></a></li>
+<li><a class="reference internal" href="#ema"><span class="std std-ref">EMA</span></a></li>
+<li><a class="reference internal" href="#expweightav"><span class="std std-ref">ExpWeightAv</span></a></li>
+<li><a class="reference internal" href="#insideask"><span class="std std-ref">InsideAsk</span></a></li>
+<li><a class="reference internal" href="#insidebid"><span class="std std-ref">InsideBid</span></a></li>
+<li><a class="reference internal" href="#mp2"><span class="std std-ref">MP2</span></a></li>
+<li><a class="reference internal" href="#midpt"><span class="std std-ref">Midpt</span></a></li>
+<li><a class="reference internal" href="#pricemultpremium"><span class="std std-ref">PriceMultPremium</span></a></li>
+<li><a class="reference internal" href="#sizewa"><span class="std std-ref">SizeWa</span></a></li>
+<li><a class="reference internal" href="#spread"><span class="std std-ref">Spread</span></a></li>
+</ul>
+<div class="section" id="askprice">
+<span id="id1"></span><h3><strong>askPrice</strong><a class="headerlink" href="#askprice" title="Permalink to this headline">¶</a></h3>
+<p>(<a class="reference internal" href="#helpfuncs"><span class="std std-ref">Helper Functions</span></a>)</p>
+<span class="target" id="module-marketlib"></span><dl class="function">
+<dt id="marketlib.askPrice">
+<code class="descclassname">marketlib.</code><code class="descname">askPrice</code><span class="sig-paren">(</span><em>q</em>, <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#marketlib.askPrice" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>‘q’ is either a stock symbol in the form of a string,
+or an already created quote node</em></p>
+<p><em>‘i’ is an int between 0 and 4</em></p>
+<p><em>returns the ask price of the quote at level i from the inside of the book</em></p>
+</dd></dl>
+
+<p>Call askPrice with either a security name as a string or use it within a valuation function where
+q is already an initialized <a class="reference internal" href="atomlib.html#quote"><span class="std std-ref">Quote</span></a> and pass this function as a short hand to output the ask price.</p>
+</div>
+<div class="section" id="askqty">
+<span id="id2"></span><h3><strong>askQty</strong><a class="headerlink" href="#askqty" title="Permalink to this headline">¶</a></h3>
+<p>(<a class="reference internal" href="#helpfuncs"><span class="std std-ref">Helper Functions</span></a>)</p>
+<span class="target" id="module-marketlib"></span><dl class="function">
+<dt id="marketlib.askQty">
+<code class="descclassname">marketlib.</code><code class="descname">askQty</code><span class="sig-paren">(</span><em>q</em>, <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#marketlib.askQty" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>‘q’ is either a stock symbol in the form of a string,
+or an already created quote node</em></p>
+<p><em>‘i’ is an int between 0 and 4</em></p>
+<p><em>returns the ask quantity of the quote at level i from the inside of the book</em></p>
+</dd></dl>
+
+<p>Call askQty with either a security name as a string or use it within a valuation function where
+q is already an initialized <a class="reference internal" href="atomlib.html#quote"><span class="std std-ref">Quote</span></a> and pass this function as a short hand to output the ask quantity.</p>
+</div>
+<div class="section" id="bidprice">
+<span id="id3"></span><h3><strong>bidPrice</strong><a class="headerlink" href="#bidprice" title="Permalink to this headline">¶</a></h3>
+<p>(<a class="reference internal" href="#helpfuncs"><span class="std std-ref">Helper Functions</span></a>)</p>
+<span class="target" id="module-marketlib"></span><dl class="function">
+<dt id="marketlib.bidPrice">
+<code class="descclassname">marketlib.</code><code class="descname">bidPrice</code><span class="sig-paren">(</span><em>q</em>, <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#marketlib.bidPrice" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>‘q’ is either a stock symbol in the form of a string,
+or an already created quote node</em></p>
+<p><em>‘i’ is an int between 0 and 4</em></p>
+<p><em>returns the bid price of the quote at level i from the inside of the book</em></p>
+</dd></dl>
+
+<p>call bidPrice with either a security name as a string or use it within a valuation function where
+q is already an initialized <a class="reference internal" href="atomlib.html#quote"><span class="std std-ref">Quote</span></a> and pass this function as a short hand to output the bid price.</p>
+</div>
+<div class="section" id="bidqty">
+<span id="id4"></span><h3><strong>bidQty</strong><a class="headerlink" href="#bidqty" title="Permalink to this headline">¶</a></h3>
+<p>(<a class="reference internal" href="#helpfuncs"><span class="std std-ref">Helper Functions</span></a>)</p>
+<span class="target" id="module-marketlib"></span><dl class="function">
+<dt id="marketlib.bidQty">
+<code class="descclassname">marketlib.</code><code class="descname">bidQty</code><span class="sig-paren">(</span><em>q</em>, <em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#marketlib.bidQty" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>‘q’ is either a security name in the form of a string,
+or an already created quote node</em></p>
+<p><em>‘i’ is an int between 0 and 4</em></p>
+<p><em>returns the bid quantity of the quote at level i from the inside of the book</em></p>
+</dd></dl>
+
+<p>Call bidQty with either a security name as a string or use it within a valuation function where
+q is already an initialized <a class="reference internal" href="atomlib.html#quote"><span class="std std-ref">Quote</span></a> and pass this function as a short hand to output the bid quanitity.</p>
+</div>
+<div class="section" id="ct">
+<span id="id5"></span><h3><strong>CT</strong><a class="headerlink" href="#ct" title="Permalink to this headline">¶</a></h3>
+<p>(<a class="reference internal" href="#valfuncs"><span class="std std-ref">Valuation Functions</span></a>)</p>
+<span class="target" id="module-marketlib"></span><dl class="function">
+<dt id="marketlib.CT">
+<code class="descclassname">marketlib.</code><code class="descname">CT</code><span class="sig-paren">(</span><em>q_theo=None</em>, <em>ref_theo=None</em>, <em>vm=0.5</em>, <em>cxa=5.0</em><span class="sig-paren">)</span><a class="headerlink" href="#marketlib.CT" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>q_theo is a quote node, ref_theo is reference node</em></p>
+<p><em>vm is a volatility multiplier</em></p>
+</dd></dl>
+
+<p><strong>IN DEVELOPMENT</strong></p>
+<p>comp theo, returns Xbar * (Y/ybar)^vm where Xbar is and ema of X, y is the driver signal,
+ybar is an ema of the driver signal and vm is a volatility multiplier</p>
+</div>
+<div class="section" id="ema">
+<span id="id6"></span><h3><strong>EMA</strong><a class="headerlink" href="#ema" title="Permalink to this headline">¶</a></h3>
+<p>(<a class="reference internal" href="#valfuncs"><span class="std std-ref">Valuation Functions</span></a>)</p>
+<span class="target" id="module-marketlib"></span><dl class="function">
+<dt id="marketlib.EMA">
+<code class="descclassname">marketlib.</code><code class="descname">EMA</code><span class="sig-paren">(</span><em>node</em>, <em>tau</em>, <em>initialValue=0.0</em><span class="sig-paren">)</span><a class="headerlink" href="#marketlib.EMA" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>node is either a quote or trade event</em></p>
+<p><em>Tau is the decay factor in microseconds</em></p>
+<p><em>initial values is starting point of calculation</em>
+<em>returns exponentialy moving average of node</em></p>
+</dd></dl>
+
+<p>returns the exponentially weighted moving average, tau is the decay factor. Use either <a class="reference internal" href="atomlib.html#quote"><span class="std std-ref">Quote</span></a>, <a class="reference internal" href="atomlib.html#trade"><span class="std std-ref">Trade</span></a> or
+<a class="reference internal" href="atomlib.html#any"><span class="std std-ref">Any</span></a>. (EMA uses <a class="reference internal" href="atomlib.html#withinitial"><span class="std std-ref">WithInitial</span></a> where initial value is the initial value of a lambda function, normally
+leave as 0.0)</p>
+</div>
+<div class="section" id="expweightav">
+<span id="id7"></span><h3><strong>ExpWeightAv</strong><a class="headerlink" href="#expweightav" title="Permalink to this headline">¶</a></h3>
+<p>(<a class="reference internal" href="#valfuncs"><span class="std std-ref">Valuation Functions</span></a>)</p>
+<span class="target" id="module-marketlib"></span><dl class="function">
+<dt id="marketlib.ExpWeightAv">
+<code class="descclassname">marketlib.</code><code class="descname">ExpWeightAv</code><span class="sig-paren">(</span><em>q</em>, <em>exp=1.0</em><span class="sig-paren">)</span><a class="headerlink" href="#marketlib.ExpWeightAv" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>‘q’ is either a security name in the form of a string,
+or an already created quote node, ‘exp’ is the exponent</em></p>
+<p><em>returns exponentially weighted average of inside prices</em></p>
+</dd></dl>
+
+<p>Exponentially Weighted Average:
+call ExpWeightAv with either a security name as a string or use it within a valuation function where
+q is already an initialized <a class="reference internal" href="atomlib.html#quote"><span class="std std-ref">Quote</span></a> and pass this function as a short hand to output the Weighted average.</p>
+<p>Uses the exponent value to add weight to the  bid and ask quantities, this function will then calculate the weighted
+average by cross multiplying bid price with weighted ask quantity  and adding it to the ask price times the weighted
+bid quantity. Then dividing all that with the sum of the weighted bid and ask quantity.</p>
+<p>(Can be used as both a helper function within a valuation function in order to manipulate the output further,
+or as a valuation function in and of itself)</p>
+</div>
+<div class="section" id="insideask">
+<span id="id8"></span><h3><strong>InsideAsk</strong><a class="headerlink" href="#insideask" title="Permalink to this headline">¶</a></h3>
+<p>(<a class="reference internal" href="#helpfuncs"><span class="std std-ref">Helper Functions</span></a>)</p>
+<span class="target" id="module-marketlib"></span><dl class="function">
+<dt id="marketlib.InsideAsk">
+<code class="descclassname">marketlib.</code><code class="descname">InsideAsk</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="headerlink" href="#marketlib.InsideAsk" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>‘q’ is either a security name in the form of a string,
+or an already created quote node</em></p>
+<p><em>returns the inside ask price of q</em></p>
+</dd></dl>
+
+<p>Call InsideAsk with either a security name as a string or use it within a valuation function where
+q is already an initialized <a class="reference internal" href="atomlib.html#quote"><span class="std std-ref">Quote</span></a> and pass this function as a short hand to output the inside asking price.</p>
+</div>
+<div class="section" id="insidebid">
+<span id="id9"></span><h3><strong>InsideBid</strong><a class="headerlink" href="#insidebid" title="Permalink to this headline">¶</a></h3>
+<p>(<a class="reference internal" href="#helpfuncs"><span class="std std-ref">Helper Functions</span></a>)</p>
+<span class="target" id="module-marketlib"></span><dl class="function">
+<dt id="marketlib.InsideBid">
+<code class="descclassname">marketlib.</code><code class="descname">InsideBid</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="headerlink" href="#marketlib.InsideBid" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>‘q’ is either a security symbol in the form of a string,
+or an already created quote node</em></p>
+<p><em>returns the inside bid price of q</em></p>
+</dd></dl>
+
+<p>Call InsideBid with either a security name as a string or use it within a valuation function where
+q is already an initialized <a class="reference internal" href="atomlib.html#quote"><span class="std std-ref">Quote</span></a> and pass this function as a short hand to output the inside bid price.</p>
+</div>
+<div class="section" id="mp2">
+<span id="id10"></span><h3><strong>MP2</strong><a class="headerlink" href="#mp2" title="Permalink to this headline">¶</a></h3>
+<p>(<a class="reference internal" href="#valfuncs"><span class="std std-ref">Valuation Functions</span></a>)</p>
+<span class="target" id="module-marketlib"></span><dl class="function">
+<dt id="marketlib.MP2">
+<code class="descclassname">marketlib.</code><code class="descname">MP2</code><span class="sig-paren">(</span><em>symbol</em>, <em>exp=1.0</em>, <em>trade_weight=1</em>, <em>trade_weight_exp=1.0</em>, <em>trade_exp=1.0</em>, <em>tau_halflife=1000.0</em><span class="sig-paren">)</span><a class="headerlink" href="#marketlib.MP2" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>returns an EMA of weighted trades based off the security symbol ‘symbol’</em></p>
+</dd></dl>
+
+<p>Returns the exponential moving average of trading of weighted trades. Go to <a class="reference internal" href="tutorial.html#egmp2"><span class="std std-ref">Example Valuation Function MP2</span></a> for a detailed look at MP2.</p>
+</div>
+<div class="section" id="midpt">
+<span id="id11"></span><h3><strong>Midpt</strong><a class="headerlink" href="#midpt" title="Permalink to this headline">¶</a></h3>
+<p>(<a class="reference internal" href="#valfuncs"><span class="std std-ref">Valuation Functions</span></a>)</p>
+<span class="target" id="module-marketlib"></span><dl class="function">
+<dt id="marketlib.Midpt">
+<code class="descclassname">marketlib.</code><code class="descname">Midpt</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="headerlink" href="#marketlib.Midpt" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>‘q’ is either a security name in the form of a string,
+or an already created quote node</em></p>
+<p><em>returns the midpoint between q’s inside asking price and inside biding price</em></p>
+</dd></dl>
+
+<p>call spread with either a security name as a string or with an initiated <a class="reference internal" href="atomlib.html#quote"><span class="std std-ref">Quote</span></a>
+from the <a class="reference internal" href="atomlib.html#al"><span class="std std-ref">Alpha Trading Labs DSL</span></a> library</p>
+</div>
+<div class="section" id="pricemultpremium">
+<span id="id12"></span><h3><strong>PriceMultPremium</strong><a class="headerlink" href="#pricemultpremium" title="Permalink to this headline">¶</a></h3>
+<p>(<a class="reference internal" href="#valfuncs"><span class="std std-ref">Valuation Functions</span></a>)</p>
+<span class="target" id="module-marketlib"></span><dl class="function">
+<dt id="marketlib.PriceMultPremium">
+<code class="descclassname">marketlib.</code><code class="descname">PriceMultPremium</code><span class="sig-paren">(</span><em>referenceNode</em>, <em>priceMult</em>, <em>premium</em><span class="sig-paren">)</span><a class="headerlink" href="#marketlib.PriceMultPremium" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>‘referenceNode’ should be a trade price, bid price, or ask price,
+‘priceMult’ and ‘premium’ both should be integers</em></p>
+<p><em>returns (price * ‘priceMult’) + ‘premium’</em></p>
+</dd></dl>
+
+<p>Simple linear calculation, should normally be used with a some form of price, and returns that price times the
+multiplier and added to the premium.</p>
+</div>
+<div class="section" id="sizewa">
+<span id="id13"></span><h3><strong>SizeWa</strong><a class="headerlink" href="#sizewa" title="Permalink to this headline">¶</a></h3>
+<p>(<a class="reference internal" href="#valfuncs"><span class="std std-ref">Valuation Functions</span></a>)</p>
+<span class="target" id="module-marketlib"></span><dl class="function">
+<dt id="marketlib.SizeWa">
+<code class="descclassname">marketlib.</code><code class="descname">SizeWa</code><span class="sig-paren">(</span><em>q</em>, <em>size=1000</em>, <em>depth=3</em><span class="sig-paren">)</span><a class="headerlink" href="#marketlib.SizeWa" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>q is a is a security symbol or already created Quote node</em></p>
+<p><em>‘size’ is the denominator in the average calculation</em></p>
+<p><em>‘depth’ is how many leves into the book to use for the calculation of the average (0 - 4)</em></p>
+<p><em>returns the weighted average</em></p>
+</dd></dl>
+
+<p>Size Weighted Average:
+call SizeWa with either a security name as a string or use it within a valuation function where
+q is already an initialized <a class="reference internal" href="atomlib.html#quote"><span class="std std-ref">Quote</span></a> and pass this function as a short hand to output the Size Weighted Average.</p>
+<p>call it with a security symbol in the form of a string, set the size and depth you want.
+This will calculated a weighted bid and ask price for each bid in the levels 0 through ‘depth’ in the book
+and adding them together and dividing them by 2 * ‘size’ to output the size weighted average.</p>
+<p>(Can be used as both a helper function within a valuation function in order to manipulate the output further,
+or as a valuation function in and of itself)</p>
+</div>
+<div class="section" id="spread">
+<span id="id14"></span><h3><strong>Spread</strong><a class="headerlink" href="#spread" title="Permalink to this headline">¶</a></h3>
+<p>(<a class="reference internal" href="#valfuncs"><span class="std std-ref">Valuation Functions</span></a>)</p>
+<span class="target" id="module-marketlib"></span><dl class="function">
+<dt id="marketlib.Spread">
+<code class="descclassname">marketlib.</code><code class="descname">Spread</code><span class="sig-paren">(</span><em>q</em><span class="sig-paren">)</span><a class="headerlink" href="#marketlib.Spread" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>‘q’ is either a security name in the form of a string,
+or an already created quote node</em></p>
+<p><em>returns the difference between q’s inside asking price and inside bid price</em></p>
+</dd></dl>
+
+<p>call spread with either a security name as a string or use it within a valuation function where
+q is already an initialized <a class="reference internal" href="atomlib.html#quote"><span class="std std-ref">Quote</span></a> and pass this function as a short hand to output the spread
+between the inside asking price and inside bid price.</p>
+</div>
+</div>
+<div class="section" id="go-to">
+<h2>Go To<a class="headerlink" href="#go-to" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="index.html#home"><span class="std std-ref">Using Alpha Trading Labs</span></a></li>
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/logo.jpeg" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+
+<h3><a href="index.html">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html"><strong>Getting Started</strong></a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="atomlib.html"><strong>Alpha Trading Labs DSL</strong></a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><strong>Marketlib</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#helper-functions"><strong>Helper Functions</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#valuation-functions"><strong>Valuation Functions</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#all-functions"><strong>All Functions</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#askprice"><strong>askPrice</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#askqty"><strong>askQty</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bidprice"><strong>bidPrice</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bidqty"><strong>bidQty</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ct"><strong>CT</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ema"><strong>EMA</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#expweightav"><strong>ExpWeightAv</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#insideask"><strong>InsideAsk</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#insidebid"><strong>InsideBid</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mp2"><strong>MP2</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#midpt"><strong>Midpt</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pricemultpremium"><strong>PriceMultPremium</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sizewa"><strong>SizeWa</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spread"><strong>Spread</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#go-to">Go To</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="atomlib.html" title="previous chapter"><strong>Alpha Trading Labs DSL</strong></a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Alpha Trading Labs.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/marketlib.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

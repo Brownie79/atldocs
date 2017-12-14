@@ -1,0 +1,745 @@
+.. _AL:
+
+**Alpha Trading Labs DSL**
+=============================
+
+If you have not already you should first take a look at :ref:`gs`
+
+The Alpha Trading Labs Domain Specific Language is built to help you create a valuation function easily and effectively.
+The language is based on nodes where each event or variable is a unique instance of a node with special
+properties (You do not have to worry about their structure or what is going on behind the scenes). 
+Each of these 'nodes' is built with valuation functions in mind.  
+
+Use this page as a reference about what features of the DSL you have available and what they do.
+
+**NOTE:**
+
+
+* You will write your valuation functions in all sense and purposes as python code. In reality however you are using
+  our DSL, which when creating the model will interpret and restructure your code centered around :ref:`Events` . 
+  To understand more about what that implies, go through the :ref:`gs` page, specifically the :ref:`valuationFunc`
+
+
+* Since the DSL is built on the idea of nodes this documentation may refer to values as nodes such as a number as a 
+  constant node, or a Boolean as a conditional node.
+
+
+  
+* You will note that the functions are shown as 'atomlib.function', the application implements the DSL such that
+  you will not need to call any of the functions as '.function' but simply call them as they are, examples found 
+  in the sample code for some of the functions.   
+
+
+.. _Events:
+
+**Events**
+-------------
+
+* :ref:`Clock`
+* :ref:`Quote`
+* :ref:`Trade`
+
+.. _EventFuncs:
+
+**Event Functions**
+---------------------
+
+* :ref:`Hold`
+* :ref:`Lag`
+* :ref:`Last`
+* :ref:`OnChange`
+* :ref:`Snapshot`
+* :ref:`Timestamp`
+
+.. _EventComb:
+
+**Event Combining Functions**
+-------------------------------
+
+* :ref:`Any`
+* :ref:`Join`
+
+.. _EventFilter:
+
+**Event Filtering Functions**
+-------------------------------
+
+* :ref:`Filter`
+* :ref:`Select`
+
+.. _WInitial:
+
+**With Initial**
+------------------
+
+* :ref:`WithInitial`
+
+.. _LogicalOps:
+
+**Logical Operators**
+-----------------------
+
+* :ref:`LogicalOperators`
+
+**All Functions**
+-------------------
+
+* :ref:`Any`
+* :ref:`Clock`
+* :ref:`Filter`
+* :ref:`Hold`
+* :ref:`Join`
+* :ref:`Lag`
+* :ref:`Last`
+* :ref:`OnChange`
+* :ref:`Quote`
+* :ref:`Select`
+* :ref:`Snapshot`
+* :ref:`Timestamp`
+* :ref:`Trade`
+* :ref:`WithInitial`
+
+.. _LogicalOperators:
+
+**And, Not, Or, Xor**
+^^^^^^^^^^^^^^^^^^^^^^^
+
+( :ref:`LogicalOps` )
+
+The DSL implements its own logical operators to work with the Node based structure. 
+It does not change much except that instead of using the python diction for and, not, and or 
+(no python diction for xor) you use And(args), Not(x), Or(args), Xor(args).
+
+So for example:
+
+.. code-block:: python
+
+	trade = Trade(symbol)
+	same_price = (trade.price == Last(trade.price))
+	same_qty = (trade.qty == Last(trade.qty))
+	
+	myAnd = And(same_price, same_qty)
+	myNot = Not(same_price)
+	myOr = Or(same_price, same_qty)
+	myXor = Xor(same_price, same_qty)
+
+* **myAnd** will now be a true condition if, for the latest :ref:`Trade` 'trade' and the trade before it 
+  (:ref:`Last` trade), the price and quantity of both trades was the same
+* **myNot** will be a true condition if the piece of the two trades were different
+* **myOr** will be a true condition if either the price or quantity of the trades were the same
+* **myXor** will be a true condition if only the price or only the quantity was the same in both trades
+	
+You can now pass these as the 'condition' for the functions that require one ( :ref:`Filter` and :ref:`Select` ) 
+
+
+
+
+.. _Any:
+   
+**Any**
+^^^^^^^^
+
+( :ref:`EventComb` )
+
+.. automodule:: atomlib
+   :members: Any
+   
+Any requires at least two :ref:`Events` as arguments, and will return the latest event to have triggered. 
+
+For example:
+
+.. code-block:: python
+
+	c = Clock(100)
+	q = Quote(symbol)
+	trade = Trade(symbol)
+	event = Any(c, q, trade)
+	
+
+Event is now set up such that it is reading from c, q, and trade ( :ref:`Clock` , :ref:`Quote` or :ref:`Trade` events). 
+Specifically when the valuation function is being executed in the model, event will contain the event which happened
+most recently at that given time. Each iteration of the valuation function can contain either the same event or 
+a different one as it is dependent on the live changes of the given Quote and Trade passed as its arguments.
+
+=============================  =====  
+'event' most recent first      index  
+=============================  =====  
+'trade'                        1           
+'q'                            2       
+'q'                            3           
+'c'                            4
+'q'                            5
+'trade'                        6
+'c'                            7
+...                            ...
+=============================  =====  
+
+This means if there is something you would want to do every iteration of the valuation function, regardless of the event, 
+you wont have to write the same line of code two or three times. For example, it allows you to do things like using 
+:ref:`Timestamp` to figure out the time between events regardless of the type of event that happened before:
+
+.. code-block:: python
+	
+    last_event_timestamp = Last(Timestamp(event))
+    delta_time = Timestamp(event) - last_event_timestamp
+
+Similar to :ref:`Events` an Any node will have a record of its changes which can be accessed using :ref:`Last` or :ref:`Lag`
+
+It can also be used as an argument with already initialized events to check if they are the most recent active event during an iteration
+of the valuation function. For example using :ref:`Filter`:
+
+.. code-block:: python
+
+	c = Clock(100)
+	q = Quote(symbol)
+	trade = Trade(symbol)
+	event = Any(c, q, trade)
+	noTrade = Filter(Any(c, q), 0)
+	
+This would assign 0 to 'noTrade' if c or q were the most recent event. 
+
+
+
+.. _Clock:
+   
+**Clock**
+^^^^^^^^^^^
+
+( :ref:`Events` )
+
+.. automodule:: atomlib
+   :members: Clock
+   
+Clock will keep track of the time passed, where an event is registered every time the period is reached.
+
+It's use is to have a way to know that there were no changes to the events in the valuation function between iterations
+which can be used to skip to a specific part of the function or go to the next iteration.
+
+.. code-block:: python
+
+	c = Clock(100)
+	q = Quote(symbol)
+	trade = Trade(symbol)
+	event = Any(c, q, trade)
+
+Here :Ref:`Any` would contain c if the period of 100 microseconds passed and none of
+the other arguments have triggered (in this case, for the 'symbol' a new :ref:`Quote` was not
+registered in the book and no :ref:`Trade` was executed)
+
+
+
+
+.. _Filter:
+
+**Filter**
+^^^^^^^^^^^^
+
+( :ref:`EventFilter` )
+
+.. automodule:: atomlib
+   :members: Filter
+
+Filter allows you to assign values to a variable only if a specific condition you choose is met.
+
+
+For example if you want a variable 'z' assigned to 0 only if there
+was no change in the price of a Trade you could write:
+
+.. code-block:: python 
+	
+	trade = Tade('symbol')
+	last_trade = Last(trade)
+	samePrice = (trade.price == last_trade.price)
+	z = Filter(samePrice, 0)
+	
+Now if the trade price in a given iteration has not changed z will contain a constant node of value 0 
+	
+It is important to note that the DSL works through nodes and implements its own relational, arithmetic, and logical 
+relationships, so even though it looks similar a python Boolean cannot be passed, i.e this would not work:
+
+.. code-block:: python 
+	
+	py_bool = True
+	z = Filter(py_bool, 0)
+
+	
+	
+	
+.. _Hold:
+
+**Hold**
+^^^^^^^^^^
+
+( :ref:`EventFuncs` )
+
+.. automodule:: atomlib
+   :members: Hold
+   
+Hold can store any value which you need to use in future iterations of your
+valuation function.
+
+For example lets say you need to do a calculation with the latest trade price, but a given iteration of the
+function there might not be any new trades so you would have to use the last registered price, you could do 
+so by assigning a variable Hold with the trade price. Like this:
+
+.. code-block:: python
+
+	trade = Trade(symbol)
+	trade_price = Hold(trade.price)
+	
+Now every time the valuation function runs, it will have a value with the latest trade price. 
+So for example if the model is running and for the first four iterations, on the first iteration
+there is no trade, then trade_price would have 'None'. On the second, if there was a trade then 
+it would hold that price. On the third iteration, if there is no trade the value being held would 
+stay the same. If on the fourth there is a new trade then the new price will now be held.
+
+=================  ====  =====  ==========  =========
+iteration          1      2      3           4
+=================  ====  =====  ==========  =========
+trade_price value  None  price  same price  new price
+=================  ====  =====  ==========  =========
+
+So no matter whether or not there was a trade for any given execution of the valuation function
+you are always able to make a calculation using trade_price
+
+For a detailed look on hold go to :ref:`whyUseHold`
+
+
+.. _Join:
+
+**Join**
+^^^^^^^^^^
+
+( :ref:`EventComb` )
+
+.. automodule:: atomlib
+   :members: Join
+   
+Similar to :ref:`Any` it can read from multiple nodes, but whereas Any holds only :ref:`Events` , Join can read from other
+node types, but all the nodes that are passed into a join they must be of the same type. 
+
+Join will contain the node which was 'activated' most recently. For example passing two :ref:`Filter` nodes
+
+.. code-block:: python
+
+	trade = Trade(symbol)
+	same_price = (trade.price == Last(trade.price))
+	same_qty = (trade.qty == Last(trade.qty))
+
+	bothOrOne = Join(Filter(And(same_price, same_qty), 5), Filter(Xor(same_price, same_qty), 10))
+   
+bothOrOne will have a Join which contains two Filters, so for a given iteration of the valuation function if either 
+of these filters in the join activates, then join will contain that filter. The first filter checks if, for a the two 
+latest  trades, the price and quantity stayed the same, and returns 5, meaning bothOrOne will have the value 5. The second filter 
+checks if only the price or only the quantity stayed the same, and returns 10 if so, thus bothOrOne would have the value 10. 
+   
+=============================  =====  
+'bothOrOne' most recent first  index  
+=============================  =====  
+5                              1             
+10                             2       
+5                              3           
+5                              4                        
+...                            ...
+=============================  =====  
+
+Note that for any give iteration of the valuation function there may not be a :ref:`Trade` that executed
+therefore bothOrOne will not be executed, this is fine where the register will only contain the values 
+for when it was executed. For example:
+
+=================  ====  =====  ====  =====
+iteration          1      2      3    4
+=================  ====  =====  ====  =====
+bothOrOne value    -     5      -     10
+=================  ====  =====  ====  =====
+
+   
+   
+.. _Lag:
+
+**Lag**
+^^^^^^^^^
+
+( :ref:`EventFuncs` )
+
+.. automodule:: atomlib
+   :members: Lag
+   
+When an event is assigned to a variable, whenever there is a change and an event is 
+registered, the event variable is updated, but the past version of the event variable 
+is stored in an array in memory. Lag allows you to access this array, where n is the index.
+
+.. code-block:: python
+
+	trade = Trade(symbol)
+	fiveBack = Lag(trade, 5)
+	
+Trade(symbol) creates a node where its attributes and changes are stored in an array:
+
+=============================  =====  ========
+Trades of 'symbol'             index  fiveBack
+=============================  =====  ========
+Info on most recent tarde      1           
+Info on Last trade             2           
+Info on 3rd most recent trade  3           
+Info on 4th most recent trade  4           
+Info on 5th most recent trade  5      <---
+...                            ...
+=============================  =====  ========
+
+fiveBack would point to index 5, and as more trades are registered the array will change but fiveBack 
+will still point to index 5.
+
+( :ref:`Last` is the equivalent of Lag(x, 1) )
+
+
+
+
+
+.. _Last:
+
+**Last**
+^^^^^^^^^^
+
+( :ref:`EventFuncs` )
+
+.. automodule:: atomlib
+   :members: Last
+   
+When an event is assigned to a variable, whenever there is a change and an event is 
+registered, the event variable is updated, but the past version of the event variable 
+is stored. Last allows you to access the most recent registered event prior to the 
+current one.
+
+Example of it being used to save the latest :ref:`Timestamp` of an event
+
+.. code-block:: python
+
+    trade = Trade(symbol)
+	quote = Quote(symbol)
+	event = Any(trade, quote)
+    last_event_timestamp = Last(Timestamp(event))
+
+	
+=============================  =====  ====================
+Timstamps of 'event'           index  last_event_timestamp
+=============================  =====  ====================
+most recent timestamp          1           
+Last timestamp                 2      <---   
+3rd most recent timestamp      3           
+...                            ...
+=============================  =====  ====================
+
+here since we are using an event with :ref:`Any` there is a register of the timestamps when any of the events
+are registered regardless of the type of event. last_event_timestamp will have the time at which the event 
+directly before the most recent event happened.
+
+	
+	
+	
+.. _OnChange:
+
+**OnChange**
+^^^^^^^^^^^^^
+
+( :ref:`EventFuncs` )
+
+.. automodule:: atomlib
+   :members: OnChange
+
+Call OnChange with an :ref:`Events` to check when the event has been updated
+
+i.e for :ref:`Trade` when a trade has been executed, for :ref:`Quote` when there is a change in the book, 
+for :ref:`Clock` when the period has been reached.
+  
+.. code-block:: python
+
+	trade = Trade(symbol)
+	mostRecentTrade = OnChange(trade)
+
+mostRecentTrade will always contain the latest trade to have actually happened.	
+
+
+   
+   
+   
+.. _Quote:
+
+**Quote**
+^^^^^^^^^^^
+
+( :ref:`Events` )
+
+.. automodule:: atomlib
+   :members: Quote
+   
+Calling Quote with a security symbol will return a Quote Node which will have the following attributes:
+
+* *Quote.bid_qty[ i ]* bid qyuantity at i'th position in the book
+
+* *Quote.ask_qty[ i ]* ask quantity at i'th position in the book
+
+* *Quote.bid_price[ i ]* bid price at i'th position in the book
+
+* *Quote.ask_price[ i ]* ask price at i'th position in the book
+
+This will allow you to check the bid price/quantity and ask bid/quanitity for the first 5 levels in the book
+of the given security symbol (the inside quote is at i = 0)
+
+Quote:
+
+============  ============  ==============  ==============  ==========
+.bid_qty      .ask_qty      .bid_price      .ask_price      level
+============  ============  ==============  ==============  ==========
+bid_qty[ 0 ]  ask_qty[ 0 ]  bid_price[ 0 ]  ask_price[ 0 ]  Inside (1)
+bid_qty[ 1 ]  ask_qty[ 1 ]  bid_price[ 1 ]  ask_price[ 1 ]  2
+bid_qty[ 2 ]  ask_qty[ 2 ]  bid_price[ 2 ]  ask_price[ 2 ]  3
+bid_qty[ 3 ]  ask_qty[ 3 ]  bid_price[ 3 ]  ask_price[ 3 ]  4
+bid_qty[ 4 ]  ask_qty[ 4 ]  bid_price[ 4 ]  ask_price[ 4 ]  5
+============  ============  ==============  ==============  ==========
+
+Here is a useful example of using quote to assign an inside bid price using :ref:`Select` based on whether the 
+inside bid quantity is within the size threshold (a value you can determine)
+
+.. code-block:: python
+
+   q = Quote(symbol)
+   inside_bid_price = Select(q.bid_qty[0] <= size_threshold, q.bid_price[1], q.bid_price[0])
+   
+If the bid quantity of the inside bid is less than or equal to your determined threshold, then assign the :ref:`Last` 
+bid price q.bid_price[1] as your desired inside bid price, otherwise use the actual inside bid price 'q.bid_price[0]'
+
+   
+   
+   
+   
+   
+.. _Select:
+   
+**Select**
+^^^^^^^^^^^^
+
+( :ref:`EventFilter` )
+
+.. automodule:: atomlib
+   :members: Select
+   
+Select is essentially the DSL's implementation of 'If Else'
+
+You can use this for a variety of calculations where you want to assign values based on whether a condition is met
+like on the example used in :ref:`Quote` assigning a desired inside bid price only when the current inside bid 
+quantity is within a desired threshold:
+
+.. code-block:: python
+
+   q = Quote(symbol)
+   inside_bid_price = Select(q.bid_qty[0] <= size_threshold, q.bid_price[1], q.bid_price[0])
+   
+If the bid quantity of the inside bid is less than or equal to your determined threshold, then assign the :ref:`Last` 
+bid price (q.bid_price[1]) as your desired inside bid price, otherwise assign it to the actual inside bid price (q.bid_price[0]).
+
+======================  ====  ==============  ==============  ==============
+iteration               1      2              3               4
+======================  ====  ==============  ==============  ==============
+inside_bid_price value  -     q.bid_price[1]  q.bid_price[0]  q.bid_price[0]
+======================  ====  ==============  ==============  ==============
+
+Note that for any give iteration of the valuation function there may not be a :ref:`Quote` that executed
+therefore inside_bid_price will not be executed, in this example the first iteration, this is fine.
+
+
+
+
+
+
+.. _Snapshot:
+
+**Snapshot**
+^^^^^^^^^^^^^^
+
+( :ref:`EventFuncs` )
+
+.. automodule:: atomlib
+   :members: Snapshot
+
+Think of Snapshot as a mix of :ref:`Hold` and :ref:`Lag`, where you pass an event node 'y' and a level 'x'
+where this will hold the x'th index of that event. For example:
+
+.. code-block:: python
+
+    trade = Trade(symbol)
+	snapTrade = Snapshot(3, trade)
+   
+=============================  =========  ========
+Trades of 'symbol'             index 'x'  fiveBack
+=============================  =========  ========
+Info on most recent tarde      1           
+Info on Last trade             2           
+Info on 3rd most recent trade  3           
+Info on 4th most recent trade  4           
+Info on 5th most recent trade  5      
+...                            ...
+=============================  =========  ========
+   
+snapTrade will hold a the value at the third index stored and can be used at any iteration of the valuation function
+regardless of whether there was a  :ref:`Trade` event that iteration or not.
+
+   
+   
+   
+   
+   
+.. _Timestamp:
+
+**Timestamp**
+^^^^^^^^^^^^^^^
+
+( :ref:`EventFuncs` )
+
+.. automodule:: atomlib
+   :members: Timestamp
+  
+Here is an example of it being used to get the change in time between the latest event and the most recent 
+using :ref:`Any` with :ref:`Clock` , :ref:`Quote` and :ref:`Trade`
+
+.. code-block:: python
+
+    c = Clock(100)
+    q = Quote(symbol)
+    trade = Trade(symbol)
+    event = Any(c, q, trade)
+    last_event_timestamp = Last(Timestamp(event))
+    delta_time = Timestamp(event) - last_event_timestamp
+
+
+Timestamp also keeps a register of its changes like events do, so delta_time will always have the time difference between
+the last two events regardless of the type of event they were.
+	
+=============================  ============  =====  ===============================
+Timstamps of 'event'           event         index  delta_time = (a - b)
+=============================  ============  =====  ===============================
+most recent timestamp          'trade'       1      <---  a (Timestamp(event))
+Last timestamp                 'q'           2      <---  b (Last(Timstamp(event)))
+3rd most recent timestamp      'c'           3           
+...                            ...           ...
+=============================  ============  =====  ===============================
+
+	
+	
+	
+	
+	
+.. _Trade:
+
+**Trade**
+^^^^^^^^^^
+
+( :ref:`Events` )
+
+.. automodule:: atomlib
+   :members: Trade
+
+The Trade Node will keep track of the latest trades in the market for the given security symbol.
+This will allow you to check if and what trade happened last. 
+   
+Calling Trade with a security symbol will return a Trade Node which will have the following attributes:   
+
+* *Trade.price* returns the price of the last trade
+
+* *Trade.qty* returns the quantity of the last trade
+
+* *Trade.side* returns which side of the book the trade happened in
+
+Allowing you to access the price, quantity and side of the most recent trade to have actually executed. 
+Combine Trade with other functions such as (:ref:`Last` and :ref:`Lag`) to get the attributes for earlier
+trades to have happened.
+
+Trade:
+
+===========================  ==============================  =============================
+.price                       .qty                            .side
+===========================  ==============================  =============================
+most recent trade price      most recent trade quantity      side of most recent trade
+last trade price             last trade quantity             side of last trade
+3rd most recent trade price  3rd most recent trade quantity  side of 3rd most recent trade
+===========================  ==============================  =============================
+
+Here is an example of using :ref:`Last` to check if the trade price has changed or not
+
+.. code-block:: python
+
+    trade = Trade(symbol)
+    last_trade = Last(trade)
+    same_price = (trade.price == last_trade.price)
+
+trade:
+	
+=============================  =====  ==========================
+Trades of 'symbol'             index  same_price = (a == b)
+=============================  =====  ==========================
+Info on most recent trade      1      <---  a (trade.price) 
+Info on Last trade             2      <---  b (last_trade.price) 
+Info on 3rd most recent trade  3           
+...                            ...
+=============================  =====  ==========================
+
+	
+	
+	
+.. _WithInitial:
+
+**WithInitial**
+^^^^^^^^^^^^^^^^^
+
+( :ref:`WInitial` )
+
+.. automodule:: atomlib
+   :members: WithInitial
+   
+WithInitial is useful so you can do a certain calculation based on a given condition as well as using a running value
+that changes each time the calculation is done. 
+
+For example let's say that if the price has not changed between the most recent trade and the one before,
+then you want to decay the value of that price, and at every iteration of the valuation function if the price 
+still has not changed then decay the value even further. You can do this as such:
+   
+.. code-block:: python
+   
+   trade = Trade(symbol)
+   same_price = (trade.price == Last(trade.price))
+   decayedPrice = WithInitial(0.0)(lambda decayed: Select(same_price, (decayed * decay) + trade.price, trade.price))
+   
+* In this example decayedPrice is initialized with withInitial where the variable 'decayed' is assigned
+  an initial value of 0.0. 
+  
+* It then runs the anonymous (lambda) function that in this case uses :ref:`Select` to help
+
+* it checks if the price in the last two trades has not changed (same_price) and if that is the case:
+
+  * decayed is assigned the calculation of its own value multiplied by a pre-determined 'decay' to which 
+    the trade price is then added. (decayed * decay) + trade.price
+	
+  * It is evident that the first time this happens since the initial value of decayed will be 0.0 then decayed will return 
+    the trade price.
+	
+  * Further, since decayed will save the value it has, and at every iteration runs the calculation with its updated 
+    value, then the decay keeps changing each time the price does not change. 
+	
+* If same_price is not true and the price has changed:
+
+  * decayed is assigned the trade price effectively re-starting the process.
+  
+* each time this process executes 'decayedPrice' is assigned the running value of 'decayed'
+
+
+
+
+
+
+Go To
+------
+
+* :ref:`home`
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search` 

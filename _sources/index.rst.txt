@@ -1,0 +1,66 @@
+.. atomlib DSL Library documentation master file, created by
+   sphinx-quickstart on Tue Nov 28 15:44:11 2017.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+   
+.. _home:
+   
+**Using Alpha Trading Labs**
+==============================
+
+Welcome to Alpha Trading Labs. Use this documentation as your starting point for creating a successful trading model.
+
+If you are new to Alpha Trading Labs and do not know where to start try going through :ref:`gs`, which will help 
+you understand how the application works and how to set up a new model. 
+
+Once you feel comfortable with the application, how it works, and what it does, you can start 
+creating your own valuation functions to be passed into the trading model. The application uses a DSL made 
+specifically for writing valuation functions which you can use, look at the DSL documentation to see what you
+can use, and what it does.
+
+To help you with your valuation function you also have available marketlib, a library of functions which
+include both a series of ready made valuation functions you can use to start off with, and some helper 
+functions to help you write your own.
+
+
+**Getting Started**
+--------------------
+
+Go through these steps to start getting acquainted with Alpha Trading Labs, and the DSL
+
+.. toctree::
+   :maxdepth: 3
+   
+   tutorial
+   
+   
+**Alpha Trading Labs DSL**
+----------------------------
+
+Go through this to know what you can achieve with your valuation function using the DSL
+
+.. toctree::
+   :maxdepth: 3
+   
+   atomlib
+   
+
+**Marketlib**
+---------------
+
+Marketlib is imported by default, and will be a good resource to get you started
+
+.. toctree::
+   :maxdepth: 3
+   
+   marketlib
+
+
+
+Search
+------
+look up a key word to find details about a function or class in the atomlib DSL library
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search` 

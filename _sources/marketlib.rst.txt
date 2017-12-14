@@ -1,0 +1,307 @@
+.. _ML:
+
+**Marketlib**
+===============
+
+Marketlib is a library of functions already imported by default on our application. There are some ready made 
+valuation functions which you can use for your model to start off with. It also has some helper functions which 
+you can use to help you write your own valuation functions.
+
+.. _helpFuncs:
+
+**Helper Functions**
+----------------------
+
+These can be used within your valuation function as short hands.
+
+* :ref:`askPrice`
+* :ref:`askQty` 
+* :ref:`bidPrice` 
+* :ref:`bidQty` 
+* :ref:`insideAsk` 
+* :ref:`insideBid` 
+
+.. _valFuncs:
+
+**Valuation Functions**
+------------------------
+
+These are a variety of simple to more complex valuation functions you can apply to the model. These
+you could also use within your valuation function to build off of the result.
+
+* :ref:`CT` 
+* :ref:`EMA`
+* :ref:`ExpWeightAv`  
+* :ref:`Midpt` 
+* :ref:`MP2` 
+* :ref:`PriceMultPremium` 
+* :ref:`SizeWa` 
+* :ref:`Spread` 
+
+**All Functions**
+-------------------
+
+* :ref:`askPrice`
+* :ref:`askQty` 
+* :ref:`bidPrice` 
+* :ref:`bidQty` 
+* :ref:`CT` 
+* :ref:`EMA` 
+* :ref:`ExpWeightAv` 
+* :ref:`insideAsk` 
+* :ref:`insideBid` 
+* :ref:`MP2` 
+* :ref:`Midpt` 
+* :ref:`PriceMultPremium` 
+* :ref:`SizeWa` 
+* :ref:`Spread` 
+
+
+ 
+
+.. _askPrice:
+
+**askPrice**
+^^^^^^^^^^^^^
+
+(:ref:`helpFuncs`)
+
+.. automodule:: marketlib
+   :members: askPrice
+   
+Call askPrice with either a security name as a string or use it within a valuation function where
+q is already an initialized :ref:`Quote` and pass this function as a short hand to output the ask price.
+
+
+
+
+.. _askQty:
+
+**askQty**
+^^^^^^^^^^^
+
+(:ref:`helpFuncs`)
+
+.. automodule:: marketlib
+   :members: askQty
+   
+Call askQty with either a security name as a string or use it within a valuation function where
+q is already an initialized :ref:`Quote` and pass this function as a short hand to output the ask quantity.
+
+
+
+
+
+.. _bidPrice:
+   
+**bidPrice**
+^^^^^^^^^^^^^
+
+(:ref:`helpFuncs`)
+
+.. automodule:: marketlib
+   :members: bidPrice
+   
+call bidPrice with either a security name as a string or use it within a valuation function where
+q is already an initialized :ref:`Quote` and pass this function as a short hand to output the bid price.
+
+
+
+
+.. _bidQty:
+   
+**bidQty**
+^^^^^^^^^^
+
+(:ref:`helpFuncs`)
+
+.. automodule:: marketlib
+   :members: bidQty
+   
+Call bidQty with either a security name as a string or use it within a valuation function where
+q is already an initialized :ref:`Quote` and pass this function as a short hand to output the bid quanitity.
+
+
+
+
+.. _CT:
+   
+**CT**
+^^^^^^^^
+
+(:ref:`valFuncs`)
+
+.. automodule:: marketlib
+   :members: CT
+
+**IN DEVELOPMENT**
+
+comp theo, returns Xbar * (Y/ybar)^vm where Xbar is and ema of X, y is the driver signal, 
+ybar is an ema of the driver signal and vm is a volatility multiplier
+   
+   
+   
+.. _EMA:
+   
+**EMA**
+^^^^^^^^^
+
+(:ref:`valFuncs`)
+
+.. automodule:: marketlib
+   :members: EMA
+
+returns the exponentially weighted moving average, tau is the decay factor. Use either :ref:`Quote`, :ref:`Trade` or
+:ref:`Any`. (EMA uses :ref:`withInitial` where initial value is the initial value of a lambda function, normally
+leave as 0.0)
+   
+   
+   
+.. _ExpWeightAv:
+   
+**ExpWeightAv**
+^^^^^^^^^^^^^^^^^
+
+(:ref:`valFuncs`)
+
+.. automodule:: marketlib
+   :members: ExpWeightAv
+   
+Exponentially Weighted Average:
+call ExpWeightAv with either a security name as a string or use it within a valuation function where
+q is already an initialized :ref:`Quote` and pass this function as a short hand to output the Weighted average.
+
+Uses the exponent value to add weight to the  bid and ask quantities, this function will then calculate the weighted 
+average by cross multiplying bid price with weighted ask quantity  and adding it to the ask price times the weighted
+bid quantity. Then dividing all that with the sum of the weighted bid and ask quantity.
+
+(Can be used as both a helper function within a valuation function in order to manipulate the output further,
+or as a valuation function in and of itself)
+
+
+.. _InsideAsk:
+   
+**InsideAsk**
+^^^^^^^^^^^^^^^
+
+(:ref:`helpFuncs`)
+
+.. automodule:: marketlib
+   :members: InsideAsk
+
+Call InsideAsk with either a security name as a string or use it within a valuation function where
+q is already an initialized :ref:`Quote` and pass this function as a short hand to output the inside asking price.
+
+
+
+   
+.. _InsideBid:
+   
+**InsideBid**
+^^^^^^^^^^^^^^^
+
+(:ref:`helpFuncs`)
+
+.. automodule:: marketlib
+   :members: InsideBid
+
+Call InsideBid with either a security name as a string or use it within a valuation function where
+q is already an initialized :ref:`Quote` and pass this function as a short hand to output the inside bid price.
+
+
+
+
+.. _MP2:
+   
+**MP2**
+^^^^^^^^^
+
+(:ref:`valFuncs`)
+
+.. automodule:: marketlib
+   :members: MP2
+  
+Returns the exponential moving average of trading of weighted trades. Go to :ref:`egMP2` for a detailed look at MP2.
+   
+   
+.. _Midpt:
+   
+**Midpt**
+^^^^^^^^^^^
+
+(:ref:`valFuncs`)
+
+.. automodule:: marketlib
+   :members: Midpt
+   
+call spread with either a security name as a string or with an initiated :ref:`Quote`
+from the :ref:`AL` library
+
+
+
+
+
+.. _PriceMultPremium:
+   
+**PriceMultPremium**
+^^^^^^^^^^^^^^^^^^^^^
+
+(:ref:`valFuncs`)
+
+.. automodule:: marketlib
+   :members: PriceMultPremium
+
+Simple linear calculation, should normally be used with a some form of price, and returns that price times the
+multiplier and added to the premium.
+   
+   
+   
+.. _Sizewa:
+   
+**SizeWa**
+^^^^^^^^^^^
+
+(:ref:`valFuncs`)
+
+.. automodule:: marketlib
+   :members: SizeWa
+
+Size Weighted Average:
+call SizeWa with either a security name as a string or use it within a valuation function where
+q is already an initialized :ref:`Quote` and pass this function as a short hand to output the Size Weighted Average.
+
+call it with a security symbol in the form of a string, set the size and depth you want.
+This will calculated a weighted bid and ask price for each bid in the levels 0 through 'depth' in the book
+and adding them together and dividing them by 2 * 'size' to output the size weighted average.
+
+(Can be used as both a helper function within a valuation function in order to manipulate the output further,
+or as a valuation function in and of itself)
+   
+   
+   
+.. _Spread:
+   
+**Spread**
+^^^^^^^^^^^
+
+(:ref:`valFuncs`)
+
+.. automodule:: marketlib
+   :members: Spread
+   
+call spread with either a security name as a string or use it within a valuation function where
+q is already an initialized :ref:`Quote` and pass this function as a short hand to output the spread 
+between the inside asking price and inside bid price.
+
+
+   
+   
+   
+   
+Go To
+------
+
+* :ref:`home`
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search` 
